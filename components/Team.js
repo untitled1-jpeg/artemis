@@ -5,10 +5,17 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Team() {
+export default function Team({ data }) {
     const sectionRef = useRef(null);
     const imageRef = useRef(null);
     const contentRef = useRef(null);
+
+    const content = {
+        title: data?.title || "THE ARTEMIS TEAM",
+        text: data?.content || "Founded by Anne Jones, Artemis is small by design, high-touch by choice, and relentless about doing what's right - for advisors and the clients they serve.",
+        image: data?.featuredImage || null,
+        ctaLabel: data?.ctaLabel || "MEET THE TEAM"
+    };
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -38,15 +45,19 @@ export default function Team() {
 
     return (
         <section className="team" ref={sectionRef}>
-            <div className="team-image" ref={imageRef}></div>
+            <div
+                className="team-image"
+                ref={imageRef}
+                style={content.image ? { backgroundImage: `url(${content.image})`, backgroundSize: 'cover' } : {}}
+            ></div>
             <div className="team-content" ref={contentRef}>
                 <div className="split-content-anchor">
-                    <h2>THE ARTEMIS TEAM</h2>
-                    <p>Founded by Anne Jones, Artemis is small by design, high-touch by choice, and relentless about doing what&apos;s
-                        right - for advisors and the clients they serve.</p>
+                    <h2>{content.title}</h2>
+                    <p>{content.text}</p>
                     <div className="learn-more"
-                        style={{ color: 'white', borderBottom: '1px solid white', width: 'fit-content', paddingBottom: '2px' }}>MEET THE TEAM
-                        &rarr;</div>
+                        style={{ color: 'white', borderBottom: '1px solid white', width: 'fit-content', paddingBottom: '2px' }}>
+                        {content.ctaLabel} &rarr;
+                    </div>
                 </div>
             </div>
         </section>

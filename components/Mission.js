@@ -5,13 +5,18 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Mission() {
+export default function Mission({ data }) {
     const sectionRef = useRef(null);
     const headlineRef = useRef(null);
 
+    const content = {
+        title: data?.title || "THE ARTEMIS MISSION",
+        body: data?.body || "At Artemis, we approach every relationship with both creativity and sensitivity, creating coverage that is personal, purposeful, and perfectly aligned with each client's individual goals.",
+        ctaLabel: data?.ctaLabel || "LEARN MORE"
+    };
+
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            // 1. Headline Reveal
             gsap.from(headlineRef.current.children, {
                 scrollTrigger: {
                     trigger: sectionRef.current,
@@ -24,7 +29,6 @@ export default function Mission() {
                 ease: 'power3.out'
             });
 
-            // 2. Curves Breathing Animation
             const curves = sectionRef.current.querySelectorAll('.mission-curve');
             curves.forEach((el, i) => {
                 const length = el.getTotalLength();
@@ -54,10 +58,9 @@ export default function Mission() {
             <div className="container">
                 <div className="mission-grid">
                     <div className="mission-headline" ref={headlineRef}>
-                        <h2>THE ARTEMIS MISSION</h2>
-                        <p>At Artemis, we approach every relationship with both creativity and sensitivity, creating coverage that is
-                            personal, purposeful, and perfectly aligned with each client&apos;s individual goals.</p>
-                        <div className="learn-more">LEARN MORE <span style={{ fontSize: '1.2rem' }}>&rarr;</span></div>
+                        <h2>{content.title}</h2>
+                        <p>{content.body}</p>
+                        <div className="learn-more">{content.ctaLabel} <span style={{ fontSize: '1.2rem' }}>&rarr;</span></div>
                     </div>
                     <div className="curves-container">
                         <svg viewBox="0 0 275.6 142.87" fill="none" xmlns="http://www.w3.org/2000/svg"

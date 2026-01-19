@@ -5,8 +5,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Offerings() {
+export default function Offerings({ data }) {
     const sectionRef = useRef(null);
+
+    const content = {
+        title: data?.title || "ARTEMIS OFFERINGS",
+        body: data?.body || "Artemis delivers smart, strategic, customized life insurance built to secure families and transfer wealth, annuities that strengthen long-term financial plans, and coverage that keeps life moving when the unexpected hits. Clear guidance. Confident decisions. Protection that works as hard as you do.",
+        ctaLabel: data?.ctaLabel || "SEE OUR OFFERINGS"
+    };
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -31,11 +37,11 @@ export default function Offerings() {
             <div className="container">
                 <div className="offerings-grid">
                     <div className="offerings-text">
-                        <h2>ARTEMIS OFFERINGS</h2>
-                        <p>Artemis delivers smart, strategic, customized life insurance built to secure families and transfer wealth,
-                            annuities that strengthen long-term financial plans, and coverage that keeps life moving when the unexpected
-                            hits. Clear guidance. Confident decisions. Protection that works as hard as you do.</p>
-                        <div className="learn-more" style={{ marginTop: '2rem', color: 'var(--color-gold)' }}>SEE OUR OFFERINGS &rarr;</div>
+                        <h2>{content.title}</h2>
+                        <p>{content.body}</p>
+                        <div className="learn-more" style={{ marginTop: '2rem', color: 'var(--color-gold)' }}>
+                            {content.ctaLabel} &rarr;
+                        </div>
                     </div>
                     <div className="icon-grid">
                         <div className="icon-box">
