@@ -1,7 +1,7 @@
 import { client } from '@/sanity/lib/client';
-import { heroQuery, missionQuery, teamQuery, advisorQuery } from '@/sanity/lib/queries';
+import { heroQuery, missionQuery, teamQuery, advisorQuery, offeringsQuery } from '@/sanity/lib/queries';
 import Nav from '@/components/Nav';
-import Hero from '@/components/Hero';
+import HomeHero from '@/components/HomeHero';
 import Mission from '@/components/Mission';
 import Team from '@/components/Team';
 import Offerings from '@/components/Offerings';
@@ -21,7 +21,7 @@ export default async function Home() {
   return (
     <main>
       <Nav />
-      <Hero data={heroData} />
+      <HomeHero data={heroData} />
       <Mission data={missionData} />
       <Team data={teamData} />
       <Offerings data={offeringsData} />

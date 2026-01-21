@@ -1,35 +1,39 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 
 export default function CustomCursor() {
     const cursorRef = useRef(null);
     const followerRef = useRef(null);
+    const [isVisible, setIsVisible] = useState(false);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const cursor = cursorRef.current;
         const follower = followerRef.current;
 
+        // QuickTo for high performance
+        const xCursorTo = gsap.quickTo(cursor, "x", { duration: 0.1, ease: "power3" });
+        const yCursorTo = gsap.quickTo(cursor, "y", { duration: 0.1, ease: "power3" });
+        const xFollowerTo = gsap.quickTo(follower, "x", { duration: 0.4, ease: "power3" });
+        const yFollowerTo = gsap.quickTo(follower, "y", { duration: 0.4, ease: "power3" });
+
         const moveCursor = (e) => {
-            gsap.to(cursor, {
-                x: e.clientX,
-                y: e.clientY,
-                duration: 0.1,
-                ease: 'power2.out'
-            });
-            gsap.to(follower, {
-                x: e.clientX,
-                y: e.clientY,
-                duration: 0.3,
-                ease: 'power2.out'
-            });
+            if (!isVisible) setIsVisible(true);
+            xCursorTo(e.clientX);
+            yCursorTo(e.clientY);
+            xFollowerTo(e.clientX);
+            yFollowerTo(e.clientY);
         };
 
         const handleHover = () => {
             gsap.to(follower, {
-                scale: 2.5,
-                backgroundColor: 'rgba(194, 152, 80, 0.15)', // var(--color-gold) with opacity
-                border: 'none',
+                scale: 1.5,
+                backgroundColor: 'rgba(194, 152, 80, 0.2)',
+                borderColor: 'var(--color-gold)',
+                duration: 0.3
+            });
+            gsap.to(cursor, {
+                scale: 0.5,
                 duration: 0.3
             });
         };
@@ -38,30 +42,38 @@ export default function CustomCursor() {
             gsap.to(follower, {
                 scale: 1,
                 backgroundColor: 'transparent',
-                border: '1px solid var(--color-gold)',
+                borderColor: 'var(--color-gold)',
+                duration: 0.3
+            });
+            gsap.to(cursor, {
+                scale: 1,
                 duration: 0.3
             });
         };
 
         window.addEventListener('mousemove', moveCursor);
 
-        const interactiveElements = document.querySelectorAll('a, button, .learn-more, .icon-box');
-        interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', handleHover);
-            el.addEventListener('mouseleave', handleHoverOut);
-        });
+        // Delegation for better performance and handling dynamic elements
+        const handleInteraction = (e) => {
+            const target = e.target.closest('a, button, .learn-more, .icon-box, .btn-connect');
+            if (target) {
+                if (e.type === 'mouseenter' || e.type === 'mouseover') handleHover();
+                if (e.type === 'mouseleave' || e.type === 'mouseout') handleHoverOut();
+            }
+        };
+
+        document.addEventListener('mouseover', handleInteraction);
+        document.addEventListener('mouseout', handleInteraction);
 
         return () => {
             window.removeEventListener('mousemove', moveCursor);
-            interactiveElements.forEach(el => {
-                el.removeEventListener('mouseenter', handleHover);
-                el.removeEventListener('mouseleave', handleHoverOut);
-            });
+            document.removeEventListener('mouseover', handleInteraction);
+            document.removeEventListener('mouseout', handleInteraction);
         };
-    }, []);
+    }, [isVisible]);
 
     return (
-        <>
+        <div className="custom-cursor" style={{ opacity: isVisible ? 1 : 0, transition: 'opacity 0.3s ease', pointerEvents: 'none' }}>
             <div
                 ref={cursorRef}
                 style={{
@@ -89,10 +101,9 @@ export default function CustomCursor() {
                     borderRadius: '50%',
                     pointerEvents: 'none',
                     zIndex: 9998,
-                    transform: 'translate(-50%, -50%)',
-                    transition: 'transform 0.1s ease-out'
+                    transform: 'translate(-50%, -50%)'
                 }}
             />
-        </>
+        </div>
     );
 }

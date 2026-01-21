@@ -9,26 +9,32 @@ import Link from 'next/link';
 
 gsap.registerPlugin(ScrollTrigger);
 
-function OfferingBox({ title, description, delay = 0 }) {
-    const boxRef = useRef(null);
+function OfferingBand({ title, features, needsTitle, needs, bgColor, textColor = 'var(--color-white)', bulletColor = 'var(--color-gold)', featureSize = '1.125rem', featureClass = "", footnote = null }) {
+    const bandRef = useRef(null);
     return (
-        <div ref={boxRef} className="offering-box" style={{ padding: '3rem', border: '1px solid var(--color-gold)', borderRadius: '2px', backgroundColor: 'transparent' }}>
-            <h3 className="serif" style={{ fontSize: '1.5rem', color: 'var(--color-gold)', marginBottom: '1.5rem', textTransform: 'none' }}>{title}</h3>
-            <p style={{ fontSize: '1.05rem', lineHeight: '1.7', color: 'var(--color-white)', fontWeight: '300', opacity: 0.9, marginBottom: '2rem' }}>{description}</p>
-            <div className="learn-more" style={{ color: 'var(--color-gold)', fontSize: '0.85rem' }}>LEARN MORE &rarr;</div>
-        </div>
-    );
-}
-
-function AssessmentStep({ number, title, description }) {
-    return (
-        <div style={{ display: 'flex', gap: '2.5rem', marginBottom: '4rem' }}>
-            <div style={{ fontSize: '1.5rem', color: 'var(--color-gold)', fontVariantNumeric: 'tabular-nums', fontWeight: '500' }}>0{number}</div>
-            <div>
-                <h4 className="serif" style={{ fontSize: '1.4rem', color: 'var(--color-gold)', marginBottom: '1rem', textTransform: 'none' }}>{title}</h4>
-                <p style={{ fontSize: '1.1rem', lineHeight: '1.7', color: 'var(--color-dark)', fontWeight: '300' }}>{description}</p>
+        <section ref={bandRef} style={{ backgroundColor: bgColor, color: textColor, padding: '4rem 0' }}>
+            <div className="container">
+                <div className="editorial-layout">
+                    <div>
+                        <h2 className="serif" style={{ color: textColor, marginBottom: '2.5rem', fontSize: '1.875rem', fontWeight: '400', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{title}</h2>
+                        <ul className={`square-bullets ${featureClass}`} style={{ opacity: 0.9, '--bullet-color': bulletColor, fontSize: featureSize, lineHeight: '1.2' }}>
+                            {features.map((f, i) => <li key={i} style={{ marginBottom: '0.6rem' }}>{f}</li>)}
+                        </ul>
+                    </div>
+                    <div style={{ borderLeft: `1px solid ${textColor}`, paddingLeft: 'var(--editorial-grid-gap)', opacity: 0.8 }}>
+                        <h3 className="body-lg" style={{ color: textColor, marginBottom: '1.5rem', fontWeight: '400', letterSpacing: '0.05em', textTransform: 'uppercase' }}>{needsTitle}</h3>
+                        <ul className="body-md" style={{ listStyle: 'none', padding: 0, lineHeight: '1.3' }}>
+                            {needs.map((n, i) => <li key={i} style={{ marginBottom: '0.4rem' }}>{n}</li>)}
+                        </ul>
+                    </div>
+                </div>
+                {footnote && (
+                    <div style={{ marginTop: '4rem', fontSize: '10px', lineHeight: '1.6', opacity: 0.6, maxWidth: '900px' }}>
+                        {footnote}
+                    </div>
+                )}
             </div>
-        </div>
+        </section>
     );
 }
 
@@ -37,9 +43,9 @@ export default function OfferingsPage() {
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            gsap.from('.offering-box', {
+            gsap.from('.reveal-up', {
                 scrollTrigger: {
-                    trigger: '.offerings-grid-main',
+                    trigger: '.offerings-bands',
                     start: 'top 80%'
                 },
                 y: 40,
@@ -48,114 +54,209 @@ export default function OfferingsPage() {
                 duration: 1.2,
                 ease: 'power3.out'
             });
+
+            gsap.from('.assessment-icon', {
+                scrollTrigger: {
+                    trigger: '.assessment',
+                    start: 'top 80%'
+                },
+                scale: 0.8,
+                opacity: 0,
+                stagger: 0.2,
+                duration: 1,
+                ease: 'back.out(1.7)'
+            });
+
+            // Drawing animation for assessment icons
+            const assessmentPaths = mainRef.current.querySelectorAll('.assessment-icon svg path, .assessment-icon svg polygon, .assessment-icon svg line, .assessment-icon svg polyline, .assessment-icon svg circle');
+            assessmentPaths.forEach(path => {
+                const length = path.getTotalLength();
+                gsap.set(path, { strokeDasharray: length, strokeDashoffset: length });
+                gsap.to(path, {
+                    scrollTrigger: {
+                        trigger: '.assessment',
+                        start: 'top 70%',
+                    },
+                    strokeDashoffset: 0,
+                    duration: 2,
+                    ease: 'power2.out',
+                    stagger: 0.1
+                });
+            });
         }, mainRef);
         return () => ctx.revert();
     }, []);
 
     return (
-        <main ref={mainRef} style={{ backgroundColor: 'var(--color-teal)' }}>
+        <main ref={mainRef} style={{ backgroundColor: 'var(--color-cream)' }}>
             <Nav />
-            <PageHero
-                title="ARTEMIS OFFERINGS"
-                image="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200"
-            />
+            <PageHero title={"ARTEMIS\nOFFERINGS"} image="/images/team/img_offerings.webp" bgPos="top center" />
 
-            <section className="offerings-intro" style={{ padding: '10rem 0', backgroundColor: 'var(--color-cream)', color: 'var(--color-teal)' }}>
+            {/* Intro Section */}
+            <section className="offerings-intro" style={{ padding: '8rem 0', backgroundColor: 'var(--color-cream)' }}>
                 <div className="container">
-                    <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '8rem', alignItems: 'flex-start' }}>
+                    <div className="editorial-layout">
                         <div>
-                            <h2 className="serif" style={{ fontSize: '2.4rem', lineHeight: '1.3', marginBottom: '3rem', textTransform: 'none', fontWeight: '400', color: 'var(--color-gold)' }}>
+                            <h2 className="serif" style={{ fontSize: '2.4rem', lineHeight: '1.3', color: 'var(--color-gold)', fontWeight: '400', textTransform: 'none', letterSpacing: 'normal' }}>
                                 We don’t push policies. <br /> We design protection.
                             </h2>
-                            <div style={{ width: '100px', height: '1px', backgroundColor: 'var(--color-gold)' }}></div>
-                        </div>
-                        <div style={{ paddingTop: '1rem' }}>
-                            <p style={{ fontSize: '1.1rem', lineHeight: '1.8', marginBottom: '2.5rem', fontWeight: '300' }}>
-                                At Artemis, our advice and expertise across individual life insurance, annuities, disability and
-                                long-term care are built around one goal: making the complex feel clear and the complicated
-                                feel simple.
-                            </p>
-                            <p style={{ fontSize: '1.1rem', lineHeight: '1.8', fontWeight: '300' }}>
-                                We work closely with individuals and families—often in conjunction with their existing team
-                                of advisors—to design strategies that capture current opportunities while building momentum
-                                for whatever comes next.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section className="offerings-grid-main" style={{ padding: '10rem 0' }}>
-                <div className="container">
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '3rem' }}>
-                        <OfferingBox
-                            title="LIFE INSURANCE"
-                            description="We deliver smart, strategic, customized life insurance that is built to secure families, transfer wealth, and protect everything you've built."
-                        />
-                        <OfferingBox
-                            title="ANNUITIES"
-                            description="A thoughtful annuity strategy can supplement your investment portfolio and provide a steady, tax-efficient income stream you'll never outlive."
-                        />
-                        <OfferingBox
-                            title="SPECIAL PROJECTS"
-                            description="Our expertise extends to individual disability, long-term care and highly specialized insurance projects tailored for unique circumstances."
-                        />
-                    </div>
-                </div>
-            </section>
-
-            <section className="assessment" style={{ padding: '10rem 0', backgroundColor: 'var(--color-white)' }}>
-                <div className="container">
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '8rem' }}>
-                        <div>
-                            <h2 className="serif" style={{ fontSize: '1.8rem', color: 'var(--color-gold)', marginBottom: '2rem', letterSpacing: '0.15em' }}>THE ARTEMIS ASSESSMENT</h2>
-                            <p style={{ fontSize: '1.1rem', lineHeight: '1.7', color: 'var(--color-dark)', fontWeight: '300' }}>
-                                Our process is designed to bring strategy and structure to your insurance portfolio. We call it The Artemis Assessment.
-                            </p>
+                            <div style={{ width: '60px', height: '1px', backgroundColor: 'var(--color-gold)', marginTop: '2rem' }}></div>
                         </div>
                         <div>
-                            <AssessmentStep
-                                number={1}
-                                title="Introduction"
-                                description="We start by learning about your goals, your current coverage, and your vision for the future."
-                            />
-                            <AssessmentStep
-                                number={2}
-                                title="Audit & Analysis"
-                                description="We perform a deep-dive review of your existing policies to ensure they are performing as intended."
-                            />
-                            <AssessmentStep
-                                number={3}
-                                title="Strategic Design"
-                                description="Our team designs a customized plan that bridges the gap between where you are and where you need to be."
-                            />
-                            <AssessmentStep
-                                number={4}
-                                title="Implementation"
-                                description="We guide you through the process of securing new coverage or optimizing existing plans with precision."
-                            />
-                            <AssessmentStep
-                                number={5}
-                                title="On-Going Support"
-                                description="As your life evolves, we stay by your side to ensure your protection plan continues to perform."
-                            />
+                            <p className="body-lg" style={{ color: 'var(--color-teal)' }}>
+                                Artemis delivers smart, strategic, customized life insurance built to secure families and transfer wealth, annuities that strengthen long-term financial plans, and coverage that keeps life moving when the unexpected hits. Clear guidance. Confident decisions. Protection that works as hard as you do.
+                            </p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section className="offerings-cta" style={{ padding: '10rem 0', backgroundColor: 'var(--color-gold)', textAlign: 'center' }}>
-                <div className="container">
-                    <h3 className="serif" style={{ fontSize: '2.5rem', color: 'white', marginBottom: '3.5rem', textTransform: 'none', lineHeight: '1.2' }}>
-                        Start protecting what matters most. <br /> Let&apos;s talk.
-                    </h3>
-                    <Link href="/connect" className="learn-more" style={{ color: 'white', borderBottom: '1px solid white', paddingBottom: '2px', width: 'fit-content', margin: '0 auto' }}>
-                        CONTACT US &rarr;
+            {/* Service Bands */}
+            <div className="offerings-bands">
+                <OfferingBand
+                    title="INSURANCE"
+                    bgColor="var(--color-teal)"
+                    bulletColor="var(--color-white)"
+                    featureSize="1.875rem"
+                    featureClass="serif"
+                    features={[
+                        "Term Life Insurance",
+                        "Whole Life Insurance",
+                        "Universal Life Insurance (UL)",
+                        "Indexed Universal Life (IUL)",
+                        "Variable Universal Life (VUL)*",
+                        "Private Placement"
+                    ]}
+                    needsTitle="NEEDS"
+                    needs={[
+                        "Income Replacement",
+                        "Multi-generational Wealth Transfer",
+                        "Estate Tax Solutions",
+                        "Buy/Sell and Key-man Funding",
+                        "Blended Family Planning",
+                        "Tax Deferred Growth",
+                        "Charitable Gifting",
+                        "Cash Value Accumulation",
+                        "Premium Finance",
+                        "Asset/Credit Protection",
+                        "Retirement Planning",
+                        "Guaranteed Income"
+                    ]}
+                    footnote="*Please consider the investment objectives, risks, charges, expenses, and your need for death-benefit coverage carefully before investing in a VUL. The prospectus, which contains this and other information about the variable life policy and the underlying investment options, can be obtained from your financial professional. The investment return and principal value of the variable life policy are not guaranteed. Variable life sub-accounts fluctuate with changes in market conditions. The principal may be worth more or less than the original amount invested when the policy is surrendered. Any guarantees offered are backed by the financial strength of the insurance company."
+                />
+
+                <OfferingBand
+                    title="ANNUITIES"
+                    bgColor="var(--color-gold)"
+                    textColor="var(--color-white)"
+                    bulletColor="var(--color-white)"
+                    featureSize="1.875rem"
+                    featureClass="serif"
+                    features={[
+                        "Review and improve in-force annuity contracts",
+                        "Income and Deferred Annuities"
+                    ]}
+                    needsTitle="TYPES"
+                    needs={[
+                        "Single Premium Immediate Annuity (SPIA)",
+                        "Fixed Annuity",
+                        "Indexed Annuity",
+                        "Variable Annuity",
+                        "Private Placement Annuity"
+                    ]}
+                />
+
+                <OfferingBand
+                    title="DISABILITY & LONG-TERM CARE INSURANCE"
+                    bgColor="var(--color-steel)"
+                    bulletColor="var(--color-white)"
+                    featureSize="1.875rem"
+                    featureClass="serif"
+                    features={[
+                        "Traditional and Hybrid Long-term Care",
+                        "Short and Long-term Disability Insurance"
+                    ]}
+                    needsTitle="NEEDS"
+                    needs={[
+                        "Planning for Long-term Illness",
+                        "Long-term and Short-term Income Replacement"
+                    ]}
+                />
+            </div>
+
+            {/* Redesigned Assessment Section */}
+            <section className="assessment" style={{ padding: '4rem 0', backgroundColor: 'var(--color-cream)', textAlign: 'center', color: 'var(--color-teal)' }}>
+                <div className="container" style={{ maxWidth: '900px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'center', gap: '3rem', marginBottom: '2rem' }}>
+                        <div className="assessment-icon" style={{ width: '100px', height: '100px', borderRadius: '50%', border: '1px solid var(--color-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '15px' }}>
+                            <svg viewBox="0 0 94.23 94.23" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
+                                <g>
+                                    <polygon points="47.55 47.89 29.89 47.89 17 31.35 34.66 31.35 47.55 47.89" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
+                                    <polygon points="65.22 47.89 47.55 47.89 34.66 31.35 52.33 31.35 65.22 47.89" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
+                                    <polygon points="82.88 47.89 65.22 47.89 52.33 31.35 69.99 31.35 82.88 47.89" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
+                                    <polygon points="52.33 64.48 69.99 64.48 82.88 47.94 65.22 47.94 52.33 64.48" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
+                                    <polygon points="34.66 64.48 52.33 64.48 65.22 47.94 47.55 47.94 34.66 64.48" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
+                                    <polygon points="17 64.48 34.66 64.48 47.55 47.94 29.89 47.94 17 64.48" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
+                                    <circle cx="47.11" cy="47.11" r="46.42" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" style={{ opacity: 0.2 }} />
+                                </g>
+                            </svg>
+                        </div>
+                        <div className="assessment-icon" style={{ width: '100px', height: '100px', borderRadius: '50%', border: '1px solid var(--color-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '15px' }}>
+                            <svg viewBox="0 0 94.23 94.23" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
+                                <g>
+                                    <path d="M2.35,39.64c32.51,0,47.52-8.52,58.07-26.55" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" strokeDasharray="6.53" />
+                                    <line x1="79.23" y1="49.1" x2="2.01" y2="49.1" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
+                                    <polyline points="64.36 42.85 79.36 49.15 64.36 55.45" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
+                                    <polyline points="46.74 21.3 60.61 12.8 56.97 28.66" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
+                                    <path d="M2.35,58.18c32.51,0,47.52,8.52,58.07,26.55" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" strokeDasharray="6.53" />
+                                    <polyline points="46.74 76.52 60.61 85.03 56.97 69.17" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
+                                    <circle cx="47.11" cy="47.11" r="46.42" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" style={{ opacity: 0.2 }} />
+                                </g>
+                            </svg>
+                        </div>
+                        <div className="assessment-icon" style={{ width: '100px', height: '100px', borderRadius: '50%', border: '1px solid var(--color-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '15px' }}>
+                            <svg viewBox="0 0 94.23 94.23" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
+                                <g>
+                                    <circle cx="47.83" cy="47.14" r="24.2" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
+                                    <circle cx="47.83" cy="47.14" r="14.04" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
+                                    <circle cx="47.83" cy="47.14" r="5.73" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
+                                    <polyline points="11.33 77.26 24.48 64.12 30.81 70.45 17.66 83.6" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
+                                    <circle cx="47.11" cy="47.11" r="46.42" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" style={{ opacity: 0.2 }} />
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <h2 className="serif" style={{ fontSize: '2rem', color: 'var(--color-gold)', marginBottom: '1.5rem', textTransform: 'uppercase', letterSpacing: '0.25rem', fontWeight: '400', lineHeight: '1.25' }}>
+                        ARTEMIS ASSESSMENT™
+                    </h2>
+
+                    <p className="body-md" style={{ color: 'var(--color-gold)', opacity: 0.8, marginBottom: '3rem', lineHeight: '1.8', maxWidth: '800px', margin: '0 auto 3rem' }}>
+                        The Artemis Assessment is a structured, yet conversational review of your goals, obligations, and the financial architecture that supports them. We gather the essential data and documentation to understand your full picture, then analyze where your current coverage aligns—or falls short—of what you truly need. This is how we determine the right plan for you: through clarity, evidence, and thoughtful insight, not product pushing. The result is a clear, strategic roadmap that strengthens protection and supports the life you’re building.
+                    </p>
+
+                    <Link href="/connect" className="learn-more body-xs" style={{ color: 'var(--color-gold)', width: 'fit-content', margin: '0 auto' }}>
+                        <span className="cta-text">REQUEST AN ASSESSMENT</span> <span className="learn-more-arrow">&rarr;</span>
                     </Link>
                 </div>
             </section>
 
-            <Footer />
+            {/* Final CTA Section */}
+            <section className="contact-cta">
+                <div className="contact-cta-image"></div>
+                <div className="contact-cta-content" style={{ backgroundColor: 'var(--color-steel)' }}>
+                    <div className="reveal-up">
+                        <h3 className="serif" style={{ fontSize: '2.5rem', color: 'white', marginBottom: '3rem', textTransform: 'none', lineHeight: '1.2', maxWidth: '520px', letterSpacing: 'normal', fontWeight: '400' }}>
+                            Complex lives deserve more than a “Tell us about yourself” box. Let’s meet.
+                        </h3>
+                        <Link href="/connect" className="learn-more body-xs" style={{ color: 'white', width: 'fit-content' }}>
+                            <span className="cta-text">CONTACT US</span> <span className="learn-more-arrow">&rarr;</span>
+                        </Link>
+                    </div>
+                </div>
+            </section>
+
+            <Footer variant="simple" />
         </main>
     );
 }

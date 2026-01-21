@@ -16,11 +16,27 @@ export default function MissionPage() {
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
             // Reveal animations for splits
-            gsap.from('.reveal-up', {
+            // Headline Wipe Reveal
+            gsap.to('.editorial-title-wipe', {
                 scrollTrigger: {
                     trigger: '.mission-editorial',
-                    start: 'top 80%',
+                    start: 'top 70%',
                 },
+                clipPath: 'inset(0% 0 0 0)',
+                y: 0,
+                duration: 1.5,
+                ease: 'power4.out',
+                overwrite: true
+            });
+
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.mission-editorial',
+                    start: 'top 70%',
+                }
+            });
+
+            tl.from('.reveal-up', {
                 y: 60,
                 opacity: 0,
                 stagger: 0.2,
@@ -36,56 +52,54 @@ export default function MissionPage() {
         <main ref={contentRef}>
             <Nav />
             <PageHero
-                title="THE ARTEMIS MISSION"
-                image="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200"
+                title={"THE ARTEMIS\nMISSION"}
+                image="/images/team/img_mission.webp"
             />
 
-            <section className="mission-editorial" style={{ padding: '10rem 0', backgroundColor: 'var(--color-cream)', color: 'var(--color-teal)' }}>
+            <section className="mission-editorial" style={{ padding: '6rem 0', backgroundColor: 'var(--color-cream)', color: 'var(--color-teal)' }}>
                 <div className="container">
-                    <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '8rem', alignItems: 'flex-start' }}>
+                    <div className="editorial-layout">
                         <div className="reveal-up">
-                            <h2 className="serif" style={{ fontSize: '2.4rem', lineHeight: '1.3', marginBottom: '3rem', textTransform: 'none', fontWeight: '400', color: 'var(--color-gold)' }}>
-                                We approach every relationship with both creativity and sensitivity, creating coverage that is personal, purposeful and perfectly aligned with each client’s individual goals.
+                            <h2 className="serif reveal-wipe" style={{ fontSize: '2.4rem', lineHeight: '1.4', marginBottom: '3rem', textTransform: 'none', fontWeight: '400', color: 'var(--color-gold)', letterSpacing: 'normal', maxWidth: '100%' }}>
+                                <span className="reveal-text-wipe editorial-title-wipe" style={{ display: 'block' }}>
+                                    We approach every relationship with both creativity and sensitivity, creating coverage that is personal, purposeful and perfectly aligned with each client’s individual goals.
+                                </span>
                             </h2>
-                            <div style={{ width: '100px', height: '1px', backgroundColor: 'var(--color-gold)' }}></div>
+                            <div style={{ width: '100px', height: '5px', backgroundColor: 'var(--color-gold)' }}></div>
                         </div>
                         <div className="reveal-up" style={{ paddingTop: '1rem' }}>
-                            <p style={{ fontSize: '1.1rem', lineHeight: '1.8', marginBottom: '2.5rem', fontWeight: '300' }}>
+                            <p className="body-lg" style={{ marginBottom: 'var(--space-3)', color: 'var(--color-teal)' }}>
                                 Artemis doesn’t do one-size-fits all. Instead, we deliver a high-touch service that is smart,
                                 forward-thinking and built to adapt as life evolves. Whether protecting a growing family,
                                 planning for the future, or navigating change, we’re here to make the process seamless and
                                 simple, ensuring each plan is not just financially sound, but emotionally grounded.
                             </p>
-                            <p style={{ fontSize: '1.1rem', lineHeight: '1.8', marginBottom: '4rem', fontWeight: '300' }}>
-                                It’s this balance of expertise and empathy, precision and flexibility that turns life insurance
-                                from a simple, protective mechanism into a hardworking asset.
+                            <p className="body-lg" style={{ marginBottom: 'var(--space-3)', color: 'var(--color-teal)' }}>
+                                It’s this balance of expertise and empathy, precision and flexibility that <span style={{ fontStyle: 'italic', fontWeight: '500' }}>turns life insurance from a simple, protective mechanism into a hardworking asset.</span>
                             </p>
                             <div className="links" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                                <Link href="/offerings" className="learn-more" style={{ color: 'var(--color-gold)', fontSize: '0.85rem' }}>OUR OFFERINGS &rarr;</Link>
-                                <Link href="/team" className="learn-more" style={{ color: 'var(--color-gold)', fontSize: '0.85rem' }}>OUR TEAM &rarr;</Link>
+                                <Link href="/offerings" className="learn-more body-xs" style={{ color: 'var(--color-gold)' }}><span className="cta-text">OUR OFFERINGS</span> <span className="learn-more-arrow">&rarr;</span></Link>
+                                <Link href="/team" className="learn-more body-xs" style={{ color: 'var(--color-gold)' }}><span className="cta-text">OUR TEAM</span> <span className="learn-more-arrow">&rarr;</span></Link>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <Advisor />
+            <Advisor variant="dark" />
 
-            <section className="contact-cta" style={{ padding: '0', display: 'grid', gridTemplateColumns: '1fr 1fr', background: 'var(--color-slate)' }}>
-                <div style={{ background: "url('https://images.unsplash.com/photo-1453614512568-c4f24d31c2c7?auto=format&fit=crop&q=80&w=1000') center/cover", filter: 'grayscale(1)', minHeight: '50vh' }}></div>
-                <div style={{ padding: '8rem 6rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', backgroundColor: 'var(--color-gold)' }}>
-                    <div className="split-content-anchor">
-                        <h3 className="serif" style={{ fontSize: '2.4rem', marginBottom: '3rem', textTransform: 'none', color: 'white', lineHeight: '1.2' }}>
-                            Life insurance is too personal for a contact form. Let’s meet in person.
-                        </h3>
-                        <Link href="/connect" className="learn-more" style={{ color: 'white', borderBottom: '1px solid white', paddingBottom: '2px', width: 'fit-content' }}>
-                            CONTACT US &rarr;
-                        </Link>
-                    </div>
+            <section className="contact-cta">
+                <div className="contact-cta-image"></div>
+                <div className="contact-cta-content">
+                    <h3 className="serif" style={{ fontSize: '2.5rem', color: 'white', marginBottom: 'var(--space-4)', textTransform: 'none', lineHeight: '1.2', maxWidth: '480px', margin: '0 0 var(--space-4)', letterSpacing: 'normal' }}>
+                        Life insurance is too personal for a contact form. Let&apos;s meet in person.
+                    </h3>
+                    <Link href="/connect" className="learn-more" style={{ color: 'white', width: 'fit-content' }}>
+                        <span className="cta-text">CONTACT US</span> <span className="learn-more-arrow">&rarr;</span>
+                    </Link>
                 </div>
             </section>
-
-            <Footer />
+            <Footer variant="simple" />
         </main>
     );
 }

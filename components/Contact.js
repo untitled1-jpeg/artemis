@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -20,13 +21,11 @@ export default function Contact() {
             });
 
             tl.from(imageRef.current, {
-                x: -100,
                 opacity: 0,
                 duration: 1.5,
                 ease: 'power3.out'
             })
                 .from(contentRef.current, {
-                    x: 100,
                     opacity: 0,
                     duration: 1.5,
                     ease: 'power3.out'
@@ -37,19 +36,19 @@ export default function Contact() {
     }, []);
 
     return (
-        <section className="contact" id="connect" ref={sectionRef}
-            style={{ padding: '0', display: 'grid', gridTemplateColumns: '1fr 1fr', background: 'var(--color-slate)' }}>
+        <section className="contact contact-layout" id="connect" ref={sectionRef}
+            style={{ background: '#8d979e' }}>
             <div className="contact-image" ref={imageRef}
-                style={{ background: "url('https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&q=80&w=1000') center/cover", filter: 'grayscale(1)', minHeight: '50vh' }}>
+                style={{ background: "url('/images/team/img_coffee.webp') center/cover", filter: 'grayscale(1)', minHeight: '40vh' }}>
             </div>
             <div className="contact-box" ref={contentRef}
-                style={{ padding: '8rem 4rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', backgroundColor: 'var(--color-slate)', alignItems: 'flex-start' }}>
-                <div className="split-content-anchor">
-                    <h3 className="serif" style={{ fontSize: '2rem', marginBottom: '2.5rem', textTransform: 'none', color: 'white' }}>Life
-                        insurance is personal. So are we. Let&apos;s meet for coffee or a cocktail.</h3>
-                    <div className="learn-more"
-                        style={{ color: 'white', borderBottom: '1px solid white', width: 'fit-content', paddingBottom: '2px' }}>CONTACT US &rarr;
-                    </div>
+                style={{ padding: '6rem 6rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', backgroundColor: '#8d979e' }}>
+                <div className="split-content-anchor" style={{ maxWidth: '480px' }}>
+                    <h2 className="serif" style={{ fontSize: '2.5rem', marginBottom: 'var(--space-4)', textTransform: 'none', color: 'white', lineHeight: '1.1', letterSpacing: 'normal', fontWeight: '300' }}>Life
+                        insurance is personal. So are we. Let&apos;s meet for coffee or a cocktail.</h2>
+                    <Link href="/connect" className="learn-more"
+                        style={{ color: 'white', cursor: 'pointer' }}><span className="cta-text">CONTACT US</span> <span className="learn-more-arrow">&rarr;</span>
+                    </Link>
                 </div>
             </div>
         </section>

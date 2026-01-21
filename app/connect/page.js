@@ -14,14 +14,27 @@ export default function ConnectPage() {
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            gsap.from('.location-card', {
+            // Headline Wipe Reveal
+            gsap.to('.connect-title-wipe', {
                 scrollTrigger: {
-                    trigger: '.locations-grid',
+                    trigger: '.connect-intro',
+                    start: 'top 80%'
+                },
+                clipPath: 'inset(0% 0 0 0)',
+                y: 0,
+                duration: 1.5,
+                ease: 'power4.out',
+                overwrite: true
+            });
+
+            gsap.from('.reveal-up', {
+                scrollTrigger: {
+                    trigger: '.connect-intro',
                     start: 'top 80%'
                 },
                 y: 40,
                 opacity: 0,
-                stagger: 0.2,
+                stagger: 0.15,
                 duration: 1.2,
                 ease: 'power3.out'
             });
@@ -33,62 +46,91 @@ export default function ConnectPage() {
         <main ref={mainRef} style={{ backgroundColor: 'var(--color-cream)' }}>
             <Nav />
             <PageHero
-                title="CONNECT WITH US"
-                image="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&q=80&w=1200"
+                title={"CONNECT\nWITH US"}
+                image="/images/team/img_contact.webp"
             />
 
-            <section className="connect-intro" style={{ padding: '10rem 0', color: 'var(--color-teal)' }}>
+            <section className="connect-intro" style={{ padding: '6rem 0', color: 'var(--color-teal)' }}>
                 <div className="container">
-                    <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '8rem', alignItems: 'flex-start' }}>
-                        <div>
-                            <h2 className="serif" style={{ fontSize: '2.4rem', lineHeight: '1.3', marginBottom: '3rem', textTransform: 'none', fontWeight: '400', color: 'var(--color-gold)' }}>
-                                We’re here to guide your next step.
+                    <div className="editorial-layout">
+                        <div className="reveal-up">
+                            <h2 className="serif reveal-wipe" style={{ fontSize: '2.4rem', lineHeight: '1.25', marginBottom: '3rem', textTransform: 'none', fontWeight: '400', color: 'var(--color-gold)', letterSpacing: 'normal', maxWidth: '100%' }}>
+                                <span className="reveal-text-wipe connect-title-wipe" style={{ display: 'block' }}>
+                                    We&apos;re here to guide<br />your next step.
+                                </span>
                             </h2>
-                            <div style={{ width: '100px', height: '1px', backgroundColor: 'var(--color-gold)' }}></div>
+                            <div style={{ width: '100px', height: '5px', backgroundColor: 'var(--color-gold)' }}></div>
                         </div>
-                        <div style={{ paddingTop: '1rem' }}>
-                            <p style={{ fontSize: '1.1rem', lineHeight: '1.8', marginBottom: '2.5rem', fontWeight: '300' }}>
+                        <div className="reveal-up" style={{ paddingTop: '1rem' }}>
+                            <p className="body-lg" style={{ color: 'var(--color-teal)' }}>
                                 Whether you need new coverage or want a clear read on your current plan, we take the time to
                                 understand your goals and design the right solution. Life insurance is too personal for a
                                 contact form. We prefer a conversation.
                             </p>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                                <a href="mailto:info@artemis-partners.com" className="learn-more" style={{ color: 'var(--color-gold)', fontSize: '1.1rem' }}>info@artemis-partners.com &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className="contact-info" style={{ backgroundColor: 'var(--color-gold)', color: 'white', padding: '4rem 0' }}>
+                <div className="container">
+                    <div className="contact-info-grid">
+                        <div className="reveal-up" style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+                            <div>
+                                <h3 className="serif" style={{ fontSize: '1.875rem', marginBottom: '0.6rem', letterSpacing: '0.1em', lineHeight: '1.25', fontWeight: '500' }}>IN PERSON</h3>
+                                <p className="serif" style={{ fontSize: '1.875rem', opacity: 0.9, lineHeight: '1.2' }}>
+                                    5950 Sherry Ln Suite 420<br />
+                                    Dallas, TX 75225
+                                </p>
+                            </div>
+
+                            <div>
+                                <h3 className="serif" style={{ fontSize: '1.875rem', marginBottom: '0.6rem', letterSpacing: '0.1em', lineHeight: '1.25', fontWeight: '500' }}>CALL</h3>
+                                <p className="serif" style={{ fontSize: '1.875rem', opacity: 0.9, lineHeight: '1.2' }}>
+                                    214.123.4567
+                                </p>
+                            </div>
+
+                            <div>
+                                <h3 className="serif" style={{ fontSize: '1.875rem', marginBottom: '0.6rem', letterSpacing: '0.1em', lineHeight: '1.25', fontWeight: '500' }}>EMAIL</h3>
+                                <p className="serif" style={{ fontSize: '1.875rem', opacity: 0.9, lineHeight: '1.2' }}>
+                                    contact@artemisdallas.com
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="reveal-up" style={{ border: '2px solid var(--color-teal)' }}>
+                            <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: '4/3', backgroundColor: 'var(--color-cream)' }}>
+                                <iframe
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3350.5510626354!2d-96.806540!3d32.857640!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864e9e9f9f9f9f9f%3A0x864e9e9f9f9f9f9f!2s5950%20Sherry%20Ln%20%23420%2C%20Dallas%2C%20TX%2075225!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus"
+                                    width="100%"
+                                    height="100%"
+                                    style={{ border: 0, filter: 'grayscale(1) contrast(0.6) brightness(1.1) opacity(0.8)', pointerEvents: 'auto' }}
+                                    allowFullScreen=""
+                                    loading="lazy"
+                                ></iframe>
+                                <div style={{
+                                    position: 'absolute',
+                                    top: '50%',
+                                    left: '50%',
+                                    transform: 'translate(-50%, -100%)',
+                                    width: '50px',
+                                    height: '50px',
+                                    pointerEvents: 'none',
+                                    zIndex: 10
+                                }}>
+                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 0C7.58 0 4 3.58 4 8c0 5.25 8 13 8 13s8-7.75 8-13c0-4.42-3.58-8-8-8z" fill="var(--color-teal)" />
+                                        <circle cx="12" cy="8" r="3.5" fill="var(--color-gold)" />
+                                    </svg>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section className="locations-grid" style={{ padding: '0 0 10rem 0' }}>
-                <div className="container">
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem' }}>
-                        <div className="location-card" style={{ padding: '4rem', backgroundColor: 'var(--color-teal)', color: 'white' }}>
-                            <h3 className="serif" style={{ fontSize: '1.8rem', color: 'var(--color-gold)', marginBottom: '2rem', textTransform: 'none' }}>ST. LOUIS</h3>
-                            <p style={{ fontSize: '1.1rem', lineHeight: '1.7', fontWeight: '300' }}>
-                                7733 Forsyth Blvd. <br />
-                                Suite 1100 <br />
-                                St. Louis, MO 63105
-                            </p>
-                            <div style={{ marginTop: '2rem', height: '1px', backgroundColor: 'rgba(255,255,255,0.1)' }}></div>
-                        </div>
-                        <div className="location-card" style={{ padding: '4rem', backgroundColor: 'var(--color-teal)', color: 'white' }}>
-                            <h3 className="serif" style={{ fontSize: '1.8rem', color: 'var(--color-gold)', marginBottom: '2rem', textTransform: 'none' }}>PALM BEACH</h3>
-                            <p style={{ fontSize: '1.1rem', lineHeight: '1.7', fontWeight: '300' }}>
-                                100 Royal Palm Way <br />
-                                Suite 250 <br />
-                                Palm Beach, FL 33480
-                            </p>
-                            <div style={{ marginTop: '2rem', height: '1px', backgroundColor: 'rgba(255,255,255,0.1)' }}></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section className="map-placeholder" style={{ height: '50vh', background: 'url("https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=1200") center/cover', filter: 'grayscale(1)' }}>
-            </section>
-
-            <Footer />
+            <Footer variant="simple" />
         </main>
     );
 }
