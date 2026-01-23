@@ -3,7 +3,6 @@ import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Nav from '@/components/Nav';
-import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import PageHero from '@/components/PageHero';
 import Link from 'next/link';
@@ -124,11 +123,6 @@ export default function ConnectPage() {
                 </div>
             </section>
 
-            <Contact
-                variant="gold"
-                title="A thoughtful plan starts with a thoughtful conversation. Let’s meet."
-                image="/images/team/img_coffee.webp"
-            />
             <Footer variant="simple" />
         </main>
     );
