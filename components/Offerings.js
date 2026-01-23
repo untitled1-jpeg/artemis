@@ -21,7 +21,7 @@ export default function Offerings({ data }) {
             gsap.to('.icon-box', {
                 scrollTrigger: {
                     trigger: sectionRef.current,
-                    start: 'top 70%',
+                    start: 'top 90%',
                 },
                 opacity: 1,
                 stagger: 0.2,
@@ -37,7 +37,7 @@ export default function Offerings({ data }) {
                 gsap.to(path, {
                     scrollTrigger: {
                         trigger: sectionRef.current,
-                        start: 'top 60%',
+                        start: 'top 80%',
                     },
                     strokeDashoffset: 0,
                     duration: 2,
@@ -71,7 +71,7 @@ export default function Offerings({ data }) {
                                     <polygon points="52.33 64.48 69.99 64.48 82.88 47.94 65.22 47.94 52.33 64.48" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
                                     <polygon points="34.66 64.48 52.33 64.48 65.22 47.94 47.55 47.94 34.66 64.48" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
                                     <polygon points="17 64.48 34.66 64.48 47.55 47.94 29.89 47.94 17 64.48" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
-                                    <circle cx="47.11" cy="47.11" r="46.42" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" style={{ opacity: 0.4 }} />
+                                    <circle cx="47.11" cy="47.11" r="46.42" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
                                 </g>
                             </svg>
                         </div>
@@ -84,7 +84,7 @@ export default function Offerings({ data }) {
                                     <polyline points="46.74 21.3 60.61 12.8 56.97 28.66" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
                                     <path d="M2.35,58.18c32.51,0,47.52,8.52,58.07,26.55" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" strokeDasharray="6.53" />
                                     <polyline points="46.74 76.52 60.61 85.03 56.97 69.17" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
-                                    <circle cx="47.11" cy="47.11" r="46.42" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" style={{ opacity: 0.4 }} />
+                                    <circle cx="47.11" cy="47.11" r="46.42" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
                                 </g>
                             </svg>
                         </div>
@@ -95,7 +95,7 @@ export default function Offerings({ data }) {
                                     <circle cx="47.83" cy="47.14" r="14.04" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
                                     <circle cx="47.83" cy="47.14" r="5.73" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
                                     <polyline points="11.33 77.26 24.48 64.12 30.81 70.45 17.66 83.6" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
-                                    <circle cx="47.11" cy="47.11" r="46.42" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" style={{ opacity: 0.4 }} />
+                                    <circle cx="47.11" cy="47.11" r="46.42" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
                                 </g>
                             </svg>
                         </div>

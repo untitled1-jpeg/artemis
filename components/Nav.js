@@ -104,9 +104,8 @@ export default function Nav() {
                     {/* Footer Info */}
                     <div className="mobile-nav-footer">
                         <div className="mobile-address">
-                            5950 SHERRY LANE<br />
-                            SUITE 420<br />
-                            DALLAS, TEXAS 75255
+                            2750 FAIRMOUNT<br />
+                            DALLAS, TEXAS 75201
                         </div>
                         <div className="mobile-phone">
                             214.123.456

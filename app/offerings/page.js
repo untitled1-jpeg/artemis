@@ -3,6 +3,7 @@ import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Nav from '@/components/Nav';
+import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import PageHero from '@/components/PageHero';
 import Link from 'next/link';
@@ -11,28 +12,69 @@ gsap.registerPlugin(ScrollTrigger);
 
 function OfferingBand({ title, features, needsTitle, needs, bgColor, textColor = 'var(--color-white)', bulletColor = 'var(--color-gold)', featureSize = '1.125rem', featureClass = "", footnote = null }) {
     const bandRef = useRef(null);
+    const titleRef = useRef(null);
+    const listRef = useRef(null);
+    const needsRef = useRef(null);
+
+    useLayoutEffect(() => {
+        const ctx = gsap.context(() => {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: bandRef.current,
+                    start: 'top 85%',
+                }
+            });
+
+            tl.from(titleRef.current, {
+                y: 30,
+                opacity: 0,
+                duration: 1,
+                ease: 'power3.out'
+            })
+                .from(listRef.current.querySelectorAll('li'), {
+                    y: 20,
+                    opacity: 0,
+                    stagger: 0.1,
+                    duration: 0.8,
+                    ease: 'power2.out'
+                }, "-=0.6")
+                .from(needsRef.current, {
+                    opacity: 0,
+                    x: 20,
+                    duration: 1.2,
+                    ease: 'power2.out'
+                }, "-=0.4");
+        }, bandRef);
+
+        return () => ctx.revert();
+    }, []);
+
     return (
         <section ref={bandRef} style={{ backgroundColor: bgColor, color: textColor, padding: '4rem 0' }}>
             <div className="container">
-                <div className="editorial-layout">
+                <div className="offering-grid" style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'minmax(0, 1.85fr) minmax(0, 1fr)',
+                    gap: '2rem'
+                }}>
                     <div>
-                        <h2 className="serif" style={{ color: textColor, marginBottom: '2.5rem', fontSize: '1.875rem', fontWeight: '400', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{title}</h2>
-                        <ul className={`square-bullets ${featureClass}`} style={{ opacity: 0.9, '--bullet-color': bulletColor, fontSize: featureSize, lineHeight: '1.2' }}>
+                        <h2 ref={titleRef} className="serif" style={{ color: textColor, marginBottom: '2.5rem', fontSize: '1.875rem', fontWeight: '400', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{title}</h2>
+                        <ul ref={listRef} className={`square-bullets ${featureClass}`} style={{ opacity: 0.9, '--bullet-color': bulletColor, fontSize: featureSize, lineHeight: '1.2' }}>
                             {features.map((f, i) => <li key={i} style={{ marginBottom: '0.6rem' }}>{f}</li>)}
                         </ul>
+                        {footnote && (
+                            <div style={{ marginTop: '2rem', fontSize: '11px', lineHeight: '1.6', opacity: 0.6, maxWidth: '600px' }}>
+                                {footnote}
+                            </div>
+                        )}
                     </div>
-                    <div style={{ borderLeft: `1px solid ${textColor}`, paddingLeft: 'var(--editorial-grid-gap)', opacity: 0.8 }}>
+                    <div ref={needsRef} style={{ borderLeft: `1px solid ${textColor}`, paddingLeft: '30px', opacity: 0.8 }}>
                         <h3 className="body-lg" style={{ color: textColor, marginBottom: '1.5rem', fontWeight: '400', letterSpacing: '0.05em', textTransform: 'uppercase' }}>{needsTitle}</h3>
                         <ul className="body-md" style={{ listStyle: 'none', padding: 0, lineHeight: '1.3' }}>
                             {needs.map((n, i) => <li key={i} style={{ marginBottom: '0.4rem' }}>{n}</li>)}
                         </ul>
                     </div>
                 </div>
-                {footnote && (
-                    <div style={{ marginTop: '4rem', fontSize: '10px', lineHeight: '1.6', opacity: 0.6, maxWidth: '900px' }}>
-                        {footnote}
-                    </div>
-                )}
             </div>
         </section>
     );
@@ -43,17 +85,25 @@ export default function OfferingsPage() {
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
-            gsap.from('.reveal-up', {
+            const introTl = gsap.timeline({
                 scrollTrigger: {
                     trigger: '.offerings-bands',
                     start: 'top 80%'
-                },
+                }
+            });
+
+            introTl.from('.reveal-up', {
                 y: 40,
                 opacity: 0,
                 stagger: 0.2,
                 duration: 1.2,
                 ease: 'power3.out'
-            });
+            }).from('.gold-divider', {
+                scaleX: 0,
+                transformOrigin: 'left',
+                duration: 1.2,
+                ease: 'power3.out'
+            }, "-=1.0");
 
             gsap.from('.assessment-icon', {
                 scrollTrigger: {
@@ -100,7 +150,7 @@ export default function OfferingsPage() {
                             <h2 className="serif" style={{ fontSize: '2.4rem', lineHeight: '1.3', color: 'var(--color-gold)', fontWeight: '400', textTransform: 'none', letterSpacing: 'normal' }}>
                                 We don’t push policies. <br /> We design protection.
                             </h2>
-                            <div style={{ width: '60px', height: '1px', backgroundColor: 'var(--color-gold)', marginTop: '2rem' }}></div>
+                            <div className="gold-divider" style={{ width: '100px', height: '4px', backgroundColor: 'var(--color-gold)', marginTop: '2rem' }}></div>
                         </div>
                         <div>
                             <p className="body-lg" style={{ color: 'var(--color-teal)' }}>
@@ -185,23 +235,25 @@ export default function OfferingsPage() {
             </div>
 
             {/* Redesigned Assessment Section */}
-            <section className="assessment" style={{ padding: '4rem 0', backgroundColor: 'var(--color-cream)', textAlign: 'center', color: 'var(--color-teal)' }}>
+            <section className="assessment" style={{ padding: '4rem 0', backgroundColor: 'var(--color-cream)', textAlign: 'center', color: 'var(--color-gold)' }}>
                 <div className="container" style={{ maxWidth: '900px' }}>
                     <div style={{ display: 'flex', justifyContent: 'center', gap: '3rem', marginBottom: '2rem' }}>
-                        <div className="assessment-icon" style={{ width: '100px', height: '100px', borderRadius: '50%', border: '1px solid var(--color-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '15px' }}>
+                        {/* Discovery Icon */}
+                        <div className="assessment-icon" style={{ width: '100px', height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <svg viewBox="0 0 94.23 94.23" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
                                 <g>
                                     <polygon points="47.55 47.89 29.89 47.89 17 31.35 34.66 31.35 47.55 47.89" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
                                     <polygon points="65.22 47.89 47.55 47.89 34.66 31.35 52.33 31.35 65.22 47.89" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
-                                    <polygon points="82.88 47.89 65.22 47.89 52.33 31.35 69.99 31.35 82.88 47.89" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
+                                    <polygon points="82.88 47.89 65.22 47.89 52.33 31.35 69.99 31.35 82.88 47.94" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
                                     <polygon points="52.33 64.48 69.99 64.48 82.88 47.94 65.22 47.94 52.33 64.48" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
                                     <polygon points="34.66 64.48 52.33 64.48 65.22 47.94 47.55 47.94 34.66 64.48" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
                                     <polygon points="17 64.48 34.66 64.48 47.55 47.94 29.89 47.94 17 64.48" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
-                                    <circle cx="47.11" cy="47.11" r="46.42" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" style={{ opacity: 0.2 }} />
+                                    <circle cx="47.11" cy="47.11" r="46.42" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
                                 </g>
                             </svg>
                         </div>
-                        <div className="assessment-icon" style={{ width: '100px', height: '100px', borderRadius: '50%', border: '1px solid var(--color-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '15px' }}>
+                        {/* Analysis Icon */}
+                        <div className="assessment-icon" style={{ width: '100px', height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <svg viewBox="0 0 94.23 94.23" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
                                 <g>
                                     <path d="M2.35,39.64c32.51,0,47.52-8.52,58.07-26.55" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" strokeDasharray="6.53" />
@@ -210,18 +262,19 @@ export default function OfferingsPage() {
                                     <polyline points="46.74 21.3 60.61 12.8 56.97 28.66" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
                                     <path d="M2.35,58.18c32.51,0,47.52,8.52,58.07,26.55" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" strokeDasharray="6.53" />
                                     <polyline points="46.74 76.52 60.61 85.03 56.97 69.17" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
-                                    <circle cx="47.11" cy="47.11" r="46.42" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" style={{ opacity: 0.2 }} />
+                                    <circle cx="47.11" cy="47.11" r="46.42" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
                                 </g>
                             </svg>
                         </div>
-                        <div className="assessment-icon" style={{ width: '100px', height: '100px', borderRadius: '50%', border: '1px solid var(--color-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '15px' }}>
+                        {/* Alignment Icon */}
+                        <div className="assessment-icon" style={{ width: '100px', height: '100px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <svg viewBox="0 0 94.23 94.23" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
                                 <g>
                                     <circle cx="47.83" cy="47.14" r="24.2" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
                                     <circle cx="47.83" cy="47.14" r="14.04" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
                                     <circle cx="47.83" cy="47.14" r="5.73" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
                                     <polyline points="11.33 77.26 24.48 64.12 30.81 70.45 17.66 83.6" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
-                                    <circle cx="47.11" cy="47.11" r="46.42" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" style={{ opacity: 0.2 }} />
+                                    <circle cx="47.11" cy="47.11" r="46.42" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.38" />
                                 </g>
                             </svg>
                         </div>
@@ -231,7 +284,7 @@ export default function OfferingsPage() {
                         ARTEMIS ASSESSMENT™
                     </h2>
 
-                    <p className="body-md" style={{ color: 'var(--color-gold)', opacity: 0.8, marginBottom: '3rem', lineHeight: '1.8', maxWidth: '800px', margin: '0 auto 3rem' }}>
+                    <p className="body-md" style={{ color: 'var(--color-teal)', opacity: 0.8, marginBottom: '3rem', lineHeight: '1.8', maxWidth: '800px', margin: '0 auto 3rem' }}>
                         The Artemis Assessment is a structured, yet conversational review of your goals, obligations, and the financial architecture that supports them. We gather the essential data and documentation to understand your full picture, then analyze where your current coverage aligns—or falls short—of what you truly need. This is how we determine the right plan for you: through clarity, evidence, and thoughtful insight, not product pushing. The result is a clear, strategic roadmap that strengthens protection and supports the life you’re building.
                     </p>
 
@@ -241,20 +294,11 @@ export default function OfferingsPage() {
                 </div>
             </section>
 
-            {/* Final CTA Section */}
-            <section className="contact-cta">
-                <div className="contact-cta-image"></div>
-                <div className="contact-cta-content" style={{ backgroundColor: 'var(--color-steel)' }}>
-                    <div className="reveal-up">
-                        <h3 className="serif" style={{ fontSize: '2.5rem', color: 'white', marginBottom: '3rem', textTransform: 'none', lineHeight: '1.2', maxWidth: '520px', letterSpacing: 'normal', fontWeight: '400' }}>
-                            Complex lives deserve more than a “Tell us about yourself” box. Let’s meet.
-                        </h3>
-                        <Link href="/connect" className="learn-more body-xs" style={{ color: 'white', width: 'fit-content' }}>
-                            <span className="cta-text">CONTACT US</span> <span className="learn-more-arrow">&rarr;</span>
-                        </Link>
-                    </div>
-                </div>
-            </section>
+            <Contact
+                variant="gold"
+                title="Complex lives deserve more than a “Tell us about yourself” box. Let’s meet."
+                image="/images/team/img_coffee.webp"
+            />
 
             <Footer variant="simple" />
         </main>

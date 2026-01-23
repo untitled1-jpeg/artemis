@@ -26,14 +26,14 @@ export default function Footer({ variant = 'full' }) {
                     textTransform: 'uppercase',
                 }}>
                     <a
-                        href="https://www.google.com/maps/search/?api=1&query=5950+Sherry+Lane+Suite+420+Dallas+Texas+75255"
+                        href="https://www.google.com/maps/search/?api=1&query=2750+Fairmount+Dallas+Texas+75201"
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{ color: 'inherit', textDecoration: 'none', transition: 'opacity 0.3s' }}
                         onMouseEnter={(e) => e.target.style.opacity = '1'}
                         onMouseLeave={(e) => e.target.style.opacity = '0.8'}
                     >
-                        5950 SHERRY LANE, SUITE 420, DALLAS, TEXAS 75255
+                        2750 FAIRMOUNT, DALLAS, TEXAS 75201
                     </a>
                     <span style={{ margin: '0 1rem', opacity: 0.5 }}>|</span>
                     <a
@@ -47,9 +47,7 @@ export default function Footer({ variant = 'full' }) {
                 </div>
 
                 {/* Divider (Only for full) */}
-                {!isSimple && (
-                    <hr style={{ border: 'none', borderTop: '1px solid rgba(194, 152, 80, 0.4)', marginBottom: 'var(--space-4)' }} />
-                )}
+                <hr style={{ border: 'none', borderTop: '1px solid rgba(194, 152, 80, 0.4)', marginBottom: 'var(--space-4)' }} />
 
                 {/* Main Legal Sections */}
                 <div style={{
@@ -59,29 +57,21 @@ export default function Footer({ variant = 'full' }) {
                     color: 'rgba(246, 245, 240, 0.5)',
                     fontFamily: 'system-ui, -apple-system, sans-serif'
                 }}>
-                    {!isSimple ? (
-                        <>
-                            <p style={{ marginBottom: 'var(--space-3)' }}>
-                                Securities and investment advisory services offered through Integrity Alliance, LLC, Member SIPC. Integrity Wealth is a marketing name for Integrity Alliance, LLC. Artemis Partners is not affiliated with Integrity Wealth.
-                            </p>
-                            <p style={{ marginBottom: 'var(--space-3)' }}>
-                                Death and Tax Advisors, LLC dba Artemis Partners and the above firms are independent and non-affiliated. Tax and legal advice are not offed through Integrity Wealth.
-                            </p>
-                            <p style={{ marginBottom: 'var(--space-3)' }}>
-                                Artemis Partners is presently licensed to sell traditional life insurance in AZ, CA, CO, DE, FL, IL, LA, MA, MI, MT, NC, NJ, OK, TN, TX, VA, and WY. Variable life and annuity products, as well as other securities products, may be sold in AZ, CA, CO, DE, FL, IL, LA, MA, MI, MT, NC, NJ, OK, TN, TX, VA, and WY.
-                            </p>
-                            <p style={{ marginBottom: 'var(--space-3)' }}>
-                                This site is published for residents of the United States only. Representatives may only conduct business with residents of the states and jurisdictions in which they are properly registered. Therefore, a response to a request for information may be delayed until appropriate registration is obtained or exemption from registration is determined. Not all services referenced on this site are available in every state and through every advisor listed. Check the background of this firm on FINRA’s BrokerCheck
-                            </p>
-                            <p>
-                                © 2025 by Death and Tax Advisors, LLC dba Artemis Partners
-                            </p>
-                        </>
-                    ) : (
-                        <p style={{ marginTop: '0.5rem', fontSize: '11px', opacity: 0.6, letterSpacing: '0.02em' }}>
-                            © 2025 by Death and Tax Advisors, LLC dba Artemis Partners <span style={{ margin: '0 1rem', opacity: 0.3 }}>|</span> <Link href="/terms" style={{ color: 'inherit', textDecoration: 'none' }}>TERMS & CONDITIONS</Link>
-                        </p>
-                    )}
+                    <p style={{ marginBottom: '0.75rem' }}>
+                        Securities and investment advisory services offered through Integrity Alliance, LLC, Member SIPC. Integrity Wealth is a marketing name for Integrity Alliance, LLC. Artemis Partners is not affiliated with Integrity Wealth.
+                    </p>
+                    <p style={{ marginBottom: '0.75rem' }}>
+                        Death and Tax Advisors, LLC dba Artemis Partners and the above firms are independent and non-affiliated. Tax and legal advice are not offed through Integrity Wealth.
+                    </p>
+                    <p style={{ marginBottom: '0.75rem' }}>
+                        Artemis Partners is presently licensed to sell traditional life insurance in AZ, CA, CO, DE, FL, IL, LA, MA, MI, MT, NC, NJ, OK, TN, TX, VA, and WY. Variable life and annuity products, as well as other securities products, may be sold in AZ, CA, CO, DE, FL, IL, LA, MA, MI, MT, NC, NJ, OK, TN, TX, VA, and WY.
+                    </p>
+                    <p style={{ marginBottom: '0.75rem' }}>
+                        This site is published for residents of the United States only. Representatives may only conduct business with residents of the states and jurisdictions in which they are properly registered. Therefore, a response to a request for information may be delayed until appropriate registration is obtained or exemption from registration is determined. Not all services referenced on this site are available in every state and through every advisor listed. Check the background of this firm on FINRA’s BrokerCheck
+                    </p>
+                    <p>
+                        © 2025 by Death and Tax Advisors, LLC dba Artemis Partners <span style={{ margin: '0 1rem', opacity: 0.3 }}>|</span> <a href="https://brokercheck.finra.org/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>FINRA’s BrokerCheck</a>
+                    </p>
                 </div>
             </div>
         </footer>

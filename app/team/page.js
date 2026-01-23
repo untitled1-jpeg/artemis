@@ -2,8 +2,10 @@
 import { useState, useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image';
 import Nav from '../../components/Nav';
 import PageHero from '../../components/PageHero';
+import Contact from '../../components/Contact';
 import Footer from '../../components/Footer';
 import Link from 'next/link';
 import BioModal from '../../components/BioModal';
@@ -18,7 +20,7 @@ function TeamMember({ name, title, bio, summary, image, email, linkedin, onReadM
             gsap.from(memberRef.current, {
                 scrollTrigger: {
                     trigger: memberRef.current,
-                    start: 'top 85%',
+                    start: 'top 95%',
                 },
                 y: 50,
                 opacity: 0,
@@ -32,10 +34,18 @@ function TeamMember({ name, title, bio, summary, image, email, linkedin, onReadM
 
     return (
         <div ref={memberRef} className="team-member">
-            <div style={{ aspectRatio: '1/1', background: `url(${image}) center/cover`, filter: 'grayscale(1)', width: '100%' }}></div>
+            <div style={{ position: 'relative', aspectRatio: '1/1', width: '100%', overflow: 'hidden' }}>
+                <Image
+                    src={image}
+                    alt={name}
+                    fill
+                    style={{ objectFit: 'cover', filter: 'grayscale(1)' }}
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                />
+            </div>
             <div>
-                <h3 className="body-lg" style={{ color: 'var(--color-gold)', marginBottom: '1.5rem', fontWeight: '400', textTransform: 'none', letterSpacing: 'normal' }}>
-                    <span style={{ letterSpacing: '0.2rem' }}>{name.toUpperCase()}</span> <span style={{ opacity: 0.8, fontWeight: '300', margin: '0 1rem' }}>|</span> <span style={{ fontStyle: 'italic', opacity: 0.9 }}>{title}</span>
+                <h3 style={{ color: 'var(--color-gold)', fontSize: '1.35rem', fontFamily: 'var(--font-sans)', marginBottom: '1.5rem', fontWeight: '400', textTransform: 'none', letterSpacing: 'normal' }}>
+                    <span style={{ letterSpacing: '0.15rem' }}>{name.toUpperCase()}</span> <span style={{ opacity: 0.8, fontWeight: '300', margin: '0 0.6rem' }}>|</span> <span style={{ fontStyle: 'italic', opacity: 0.9 }}>{title}</span>
                 </h3>
                 <p className="body-sm" style={{ color: 'rgba(255,255,255,0.8)', marginBottom: '2rem', whiteSpace: 'pre-line' }}>
                     {summary ? summary : (bio.length > 280 ? `${bio.substring(0, 280)}...` : bio)}
@@ -87,17 +97,25 @@ export default function Team() {
                 overwrite: true
             });
 
-            gsap.from('.team-intro .reveal-up', {
+            const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: '.team-intro',
                     start: 'top 80%',
-                },
+                }
+            });
+
+            tl.from('.team-intro .reveal-up', {
                 y: 40,
                 opacity: 0,
                 stagger: 0.15,
                 duration: 1.2,
                 ease: 'power3.out'
-            });
+            }).from('.gold-divider', {
+                scaleX: 0,
+                transformOrigin: 'left',
+                duration: 1.2,
+                ease: 'power3.out'
+            }, "-=1.0");
         }, contentRef);
 
         return () => ctx.revert();
@@ -115,12 +133,12 @@ export default function Team() {
                 <div className="container">
                     <div className="editorial-layout">
                         <div>
-                            <h2 className="serif reveal-wipe" style={{ fontSize: '2.4rem', lineHeight: '1.4', marginBottom: '3rem', textTransform: 'none', fontWeight: '400', color: 'var(--color-gold)', letterSpacing: 'normal', maxWidth: '100%' }}>
+                            <h2 className="serif reveal-wipe" style={{ fontSize: '2.4rem', lineHeight: '1.3', marginBottom: '3rem', textTransform: 'none', fontWeight: '400', color: 'var(--color-gold)', letterSpacing: 'normal', maxWidth: '100%' }}>
                                 <span className="reveal-text-wipe team-title-wipe" style={{ display: 'block' }}>
                                     We didn’t want to wait for the industry to evolve, so we built something better.
                                 </span>
                             </h2>
-                            <div style={{ width: '100px', height: '5px', backgroundColor: 'var(--color-gold)' }}></div>
+                            <div className="gold-divider" style={{ width: '100px', height: '4px', backgroundColor: 'var(--color-gold)' }}></div>
                         </div>
                         <div style={{ paddingTop: '1rem' }}>
                             <p className="body-lg reveal-up" style={{ marginBottom: '2.5rem', color: 'var(--color-teal)' }}>
@@ -138,7 +156,7 @@ export default function Team() {
 
             <section className="team-list" style={{ padding: '4rem 0', backgroundColor: 'var(--color-teal)' }}>
                 <div className="container" style={{ maxWidth: '1200px' }}>
-                    <h2 className="serif" style={{ fontSize: '1.875rem', color: 'var(--color-gold)', marginBottom: '6rem', letterSpacing: '0.25rem', fontWeight: '400' }}>ARTEMIS TEAM</h2>
+                    <h2 className="serif" style={{ fontSize: '2rem', color: 'var(--color-gold)', marginBottom: '3rem', letterSpacing: '0.25rem', fontWeight: '400' }}>ARTEMIS TEAM</h2>
 
                     <TeamMember
                         name="Anne Jones"
@@ -176,17 +194,11 @@ export default function Team() {
                 </div>
             </section>
 
-            <section className="contact-cta">
-                <div className="contact-cta-image"></div>
-                <div className="contact-cta-content">
-                    <h3 className="serif" style={{ fontSize: '2.5rem', color: 'white', marginBottom: 'var(--space-4)', textTransform: 'none', lineHeight: '1.2', maxWidth: '480px', margin: '0 0 var(--space-4)', letterSpacing: 'normal' }}>
-                        A thoughtful plan starts with a thoughtful conversation. Let&apos;s meet.
-                    </h3>
-                    <Link href="/connect" className="learn-more" style={{ color: 'white', width: 'fit-content' }}>
-                        <span className="cta-text">CONTACT US</span> <span className="learn-more-arrow">&rarr;</span>
-                    </Link>
-                </div>
-            </section>
+            <Contact
+                variant="gold"
+                title="A thoughtful plan starts with a thoughtful conversation. Let’s meet."
+                image="/images/team/img_coffee.webp"
+            />
 
             <BioModal
                 isOpen={isModalOpen}

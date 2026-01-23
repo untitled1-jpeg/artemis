@@ -128,10 +128,10 @@ export default function BioModal({ isOpen, onClose, member }) {
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '3rem', marginBottom: '4rem', alignItems: 'center' }}>
                         <div style={{ aspectRatio: '1/1', background: `url(${member?.image}) center/cover`, borderRadius: '0', filter: 'grayscale(1)' }}></div>
                         <div>
-                            <h2 className="serif" style={{ fontSize: '2.5rem', color: 'var(--color-gold)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                            <h2 className="serif" style={{ fontSize: '2rem', color: 'var(--color-gold)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
                                 {member?.name}
                             </h2>
-                            <h3 className="body-lg" style={{ color: 'var(--color-teal)', opacity: 0.8, fontStyle: 'italic', fontWeight: '400' }}>
+                            <h3 style={{ fontSize: '1.1rem', color: 'var(--color-teal)', opacity: 0.8, fontStyle: 'italic', fontWeight: '400', fontFamily: 'var(--font-sans)' }}>
                                 {member?.title}
                             </h3>
                             <div style={{ height: '1px', width: '60px', backgroundColor: 'var(--color-gold)', margin: '2rem 0' }}></div>

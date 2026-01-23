@@ -1,6 +1,8 @@
 @import url("https://use.typekit.net/aqs0ypj.css");
 @import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
 
+@import 'leaflet/dist/leaflet.css';
+
 :root {
   --color-teal: #2b494d;
   --color-gold: #c29850;
@@ -95,7 +97,7 @@ h6 {
   font-size: 1rem;
   /* 16px */
   font-weight: 300;
-  line-height: 1.5;
+  line-height: 1.7;
 }
 
 .body-xs {
@@ -203,24 +205,25 @@ nav.is-internal .nav-logo-target {
   font-weight: 300;
   letter-spacing: 0.15rem;
   text-transform: uppercase;
-  color: var(--color-gold);
+  color: var(--color-white);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .nav-links a {
+  color: var(--color-white);
   transition: var(--transition-smooth);
 }
 
 .nav-links a:hover,
 .nav-links a.active {
-  color: var(--color-white);
+  color: var(--color-gold);
 }
 
 .btn-connect {
-  border: 1px solid var(--color-gold);
-  color: var(--color-gold);
+  border: 1px solid var(--color-white);
+  color: var(--color-white);
   padding: 0.6rem 1.8rem;
   font-family: var(--font-sans);
   font-size: 0.875rem;
@@ -232,9 +235,9 @@ nav.is-internal .nav-logo-target {
 }
 
 .btn-connect:hover {
-  background-color: var(--color-white);
-  border-color: var(--color-white);
-  color: var(--color-teal);
+  background-color: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-white);
 }
 
 /* Mobile Helpers */
@@ -300,12 +303,20 @@ nav.is-internal .nav-logo-target {
   opacity: 0;
 }
 
+.home-hero-headline {
+  max-width: none;
+  /* No longer needed due to structural breaks */
+}
+
 /* Mission Section */
 .mission {
   background-color: var(--color-cream);
   color: var(--color-dark);
-  overflow: hidden;
-  /* Contain SVG curves */
+  overflow: visible;
+  position: relative;
+  z-index: 1;
+  /* Sit below the following section */
+  /* Allow curves to bleed into next section */
 }
 
 .mission-headline {
@@ -338,6 +349,7 @@ nav.is-internal .nav-logo-target {
 }
 
 .learn-more {
+  color: var(--color-gold);
   font-size: 0.875rem;
   /* 14px */
   text-transform: uppercase;
@@ -382,7 +394,8 @@ nav.is-internal .nav-logo-target {
 }
 
 .curves-container {
-  text-align: right;
+  display: block;
+  text-align: left;
 }
 
 /* Team Section */
@@ -390,6 +403,9 @@ nav.is-internal .nav-logo-target {
   padding: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  position: relative;
+  z-index: 2;
+  /* Sit firmly on top of mission curves */
 }
 
 .team-image-container {
@@ -404,7 +420,8 @@ nav.is-internal .nav-logo-target {
 .team-content {
   background-color: var(--color-gold);
   color: var(--color-white);
-  padding: var(--space-8) var(--space-10);
+  padding: 6rem 6rem;
+  /* Standardized generous padding for specialized blocks */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -564,6 +581,13 @@ nav.is-internal .nav-logo-target {
   grid-template-columns: 1fr 1fr;
 }
 
+.contact-box {
+  padding: 6rem 6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .editorial-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -648,6 +672,20 @@ nav.is-internal .nav-logo-target {
     /* Standard mobile gutter */
   }
 
+  @media (min-width: 480px) {
+    .container {
+      padding: 0 4rem;
+    }
+
+    /* Synced tablet padding */
+    .team-content,
+    .contact-box,
+    .contact-cta-content {
+      padding-left: 4rem !important;
+      padding-right: 4rem !important;
+    }
+  }
+
   /* Hide custom cursor on mobile */
   .custom-cursor {
     display: none !important;
@@ -677,8 +715,8 @@ nav.is-internal .nav-logo-target {
   }
 
   /* Grid Stacking */
-  .mission-grid,
   .editorial-layout,
+  .offering-grid,
   .contact-cta,
   .contact-info-grid,
   .offerings-grid,
@@ -687,6 +725,12 @@ nav.is-internal .nav-logo-target {
     /* Target generic grids */
     grid-template-columns: 1fr !important;
     gap: 3rem;
+  }
+
+  .mission-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
+    /* Remove 3rem gap on mobile */
   }
 
   .contact-cta {
@@ -726,7 +770,51 @@ nav.is-internal .nav-logo-target {
   }
 
   .curves-container {
-    display: none;
+    display: block;
+    position: relative !important;
+    bottom: -1rem !important;
+    left: 0 !important;
+    width: 100% !important;
+    max-width: 400px;
+    margin: 0 !important;
+    text-align: left;
+    z-index: 0;
+  }
+
+  .mission {
+    overflow: visible;
+    padding-bottom: 0 !important;
+  }
+
+  .team {
+    border: none !important;
+    margin: 0 !important;
+    outline: none !important;
+    background-color: transparent !important;
+  }
+
+  .team-image-container {
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .carousel-img {
+    border: none !important;
+    margin: 0 !important;
+  }
+
+  .curves-container svg {
+    margin: 0;
+  }
+
+  .mission-curve {
+    stroke-width: 1px !important;
+    /* Slightly thicker for mobile visibility */
+  }
+
+  .scroll-indicator {
+    display: none !important;
   }
 
   .team-content {
@@ -738,6 +826,20 @@ nav.is-internal .nav-logo-target {
   .hero-logo-container {
     width: 240px !important;
     margin-bottom: 1.5rem !important;
+  }
+
+  .hero-nowrap {
+    white-space: nowrap;
+  }
+
+  @media (max-width: 400px) {
+    .hero-nowrap {
+      white-space: normal;
+    }
+
+    .hero-break {
+      display: none !important;
+    }
   }
 
 
@@ -765,9 +867,16 @@ nav.is-internal .nav-logo-target {
     padding-bottom: 8rem !important;
   }
 
-  .home-hero-v2 .container h1,
+  .home-hero-v2 .container h1 {
+    max-width: 100% !important;
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
   .home-hero-v2 .container p {
     max-width: 100% !important;
+    /* Rely on container padding for line length */
     text-align: left !important;
     margin-left: 0 !important;
     margin-right: 0 !important;

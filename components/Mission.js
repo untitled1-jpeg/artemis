@@ -31,23 +31,26 @@ export default function Mission({ data }) {
             });
 
             const curves = sectionRef.current.querySelectorAll('.mission-curve');
-            curves.forEach((el, i) => {
-                const length = el.getTotalLength();
-                el.style.strokeDasharray = length;
-                el.style.strokeDashoffset = length;
+            const curveTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: 'top 70%',
+                    once: true
+                }
+            });
 
-                gsap.to(el, {
-                    scrollTrigger: {
-                        trigger: sectionRef.current,
-                        start: 'top 70%',
-                    },
-                    strokeDashoffset: 0,
-                    duration: 3 + (i * 0.5),
-                    ease: 'sine.inOut',
-                    delay: i * 0.2,
-                    repeat: -1,
-                    yoyo: true
+            curves.forEach((el, i) => {
+                const length = el.getTotalLength() || 1000;
+                gsap.set(el, {
+                    strokeDasharray: length,
+                    strokeDashoffset: length
                 });
+
+                curveTl.to(el, {
+                    strokeDashoffset: 0,
+                    duration: 2.5,
+                    ease: 'power2.inOut'
+                }, (curves.length - 1 - i) * 0.4);
             });
         }, sectionRef);
 
@@ -55,7 +58,7 @@ export default function Mission({ data }) {
     }, []);
 
     return (
-        <section className="mission" ref={sectionRef}>
+        <section className="mission" ref={sectionRef} style={{ padding: '48px 0' }}>
             <div className="container">
                 <div className="mission-grid" style={{ position: 'relative' }}>
                     <div className="mission-headline" ref={headlineRef}>
@@ -65,17 +68,24 @@ export default function Mission({ data }) {
                             <span className="cta-text">{content.ctaLabel}</span> <span className="learn-more-arrow">&rarr;</span>
                         </Link>
                     </div>
-                    <div className="curves-container" style={{ position: 'absolute', bottom: '-4rem', right: '-7rem', width: '600px', pointerEvents: 'none', zIndex: 10 }}>
-                        <svg viewBox="0 0 275.6 147" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    <div className="curves-container desktop-curves" style={{
+                        position: 'absolute',
+                        bottom: '-64px',
+                        right: '-7rem',
+                        width: '600px',
+                        pointerEvents: 'none',
+                        zIndex: 1
+                    }}>
+                        <svg viewBox="0 0 310 150" fill="none" xmlns="http://www.w3.org/2000/svg"
                             style={{ width: '100%', display: 'block' }}>
                             <path id="mission-curve-1" className="mission-curve" d="M17.27,146.98c71.86-41.87,204.96-117.16,292.44-2.5"
-                                stroke="#C2954D" strokeWidth="0.5" strokeLinecap="round" opacity="0.3" />
+                                stroke="#C2954D" strokeWidth="0.5" strokeLinecap="round" opacity="1" />
                             <path id="mission-curve-2" className="mission-curve" d="M17.27,146.98c65.41-60.41,186.56-169.05,266.19-3.61"
-                                stroke="#C2954D" strokeWidth="0.5" strokeLinecap="round" opacity="0.4" />
+                                stroke="#C2954D" strokeWidth="0.5" strokeLinecap="round" opacity="1" />
                             <path id="mission-curve-3" className="mission-curve" d="M17.27,146.98c51.59-77.58,147.15-217.1,209.96-4.63"
-                                stroke="#C2954D" strokeWidth="0.5" strokeLinecap="round" opacity="0.5" />
+                                stroke="#C2954D" strokeWidth="0.5" strokeLinecap="round" opacity="1" />
                             <path id="mission-curve-4" className="mission-curve" d="M17.27,146.98c33.24-90.4,94.81-252.99,135.28-5.4"
-                                stroke="#C2954D" strokeWidth="0.5" strokeLinecap="round" opacity="0.6" />
+                                stroke="#C2954D" strokeWidth="0.5" strokeLinecap="round" opacity="1" />
                         </svg>
                     </div>
                 </div>

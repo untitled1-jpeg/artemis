@@ -25,7 +25,7 @@ export default function Advisor({ data, variant = 'light' }) {
                 },
                 clipPath: 'inset(0% 0 0 0)',
                 y: 0,
-                duration: 1.8,
+                duration: 1.2,
                 ease: 'power4.out'
             });
 
@@ -33,7 +33,7 @@ export default function Advisor({ data, variant = 'light' }) {
             gsap.from('.advisor-body', {
                 scrollTrigger: {
                     trigger: sectionRef.current,
-                    start: 'top 70%',
+                    start: 'top 85%',
                 },
                 opacity: 0,
                 y: 20,
