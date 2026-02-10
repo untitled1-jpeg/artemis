@@ -140,7 +140,7 @@ export default function OfferingsPage() {
     return (
         <main ref={mainRef} style={{ backgroundColor: 'var(--color-cream)' }}>
             <Nav />
-            <PageHero title={"ARTEMIS\nOFFERINGS"} image="/images/team/img_offerings.webp" bgPos="top center" />
+            <PageHero title={"THE ARTEMIS\nOFFERINGS"} image="/images/team/img_offerings.webp" bgPos="top center" />
 
             {/* Intro Section */}
             <section className="offerings-intro" style={{ padding: '8rem 0', backgroundColor: 'var(--color-cream)' }}>
@@ -183,12 +183,12 @@ export default function OfferingsPage() {
                         "Multi-generational Wealth Transfer",
                         "Estate Tax Solutions",
                         "Buy/Sell and Key-man Funding",
-                        "Blended Family Planning",
-                        "Tax Deferred Growth",
+                        "Blended Family Planning Tax",
+                        "Deferred Growth",
                         "Charitable Gifting",
-                        "Cash Value Accumulation",
-                        "Premium Finance",
-                        "Asset/Credit Protection",
+                        "Cash Value",
+                        "Accumulation Premium",
+                        "Finance Asset/Credit Protection",
                         "Retirement Planning",
                         "Guaranteed Income"
                     ]}
@@ -203,16 +203,16 @@ export default function OfferingsPage() {
                     featureSize="1.875rem"
                     featureClass="serif"
                     features={[
-                        "Review and improve in-force annuity contracts",
-                        "Income and Deferred Annuities"
-                    ]}
-                    needsTitle="TYPES"
-                    needs={[
                         "Single Premium Immediate Annuity (SPIA)",
                         "Fixed Annuity",
                         "Indexed Annuity",
                         "Variable Annuity",
                         "Private Placement Annuity"
+                    ]}
+                    needsTitle="NEEDS"
+                    needs={[
+                        "Review and improve in-force annuity contracts",
+                        "Income and Deferred Annuities"
                     ]}
                 />
 

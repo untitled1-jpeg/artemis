@@ -10,7 +10,7 @@ export default function Offerings({ data }) {
     const sectionRef = useRef(null);
 
     const content = {
-        title: data?.title || "ARTEMIS OFFERINGS",
+        title: data?.title || "THE ARTEMIS OFFERINGS",
         body: data?.body || "Artemis delivers smart, strategic, customized life insurance built to secure families and transfer wealth, annuities that strengthen long-term financial plans, and coverage that keeps life moving when the unexpected hits. Clear guidance. Confident decisions. Protection that works as hard as you do.",
         ctaLabel: data?.ctaLabel || "SEE OUR OFFERINGS"
     };
