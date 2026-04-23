@@ -62,7 +62,7 @@ export default function ConnectPage() {
             <Nav />
             <PageHero
                 title={"CONNECT\nWITH US"}
-                image="/images/team/img_contact.webp"
+                image="/images/img_contact-header.jpg"
             />
 
             <section className="connect-intro" style={{ padding: '6rem 0', color: 'var(--color-teal)' }}>

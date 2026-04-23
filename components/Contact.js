@@ -9,7 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Contact({
     title = "Life insurance is personal. So are we. Let’s meet for coffee or a cocktail.",
-    image = "/images/team/img_coffee.webp",
+    image = "/images/img_coffee-cta.jpg",
     variant = "teal" // "teal" or "gold"
 }) {
     const sectionRef = useRef(null);

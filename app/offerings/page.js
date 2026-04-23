@@ -140,7 +140,7 @@ export default function OfferingsPage() {
     return (
         <main ref={mainRef} style={{ backgroundColor: 'var(--color-cream)' }}>
             <Nav />
-            <PageHero title={"THE ARTEMIS\nOFFERINGS"} image="/images/team/img_offerings.webp" bgPos="top center" />
+            <PageHero title={"THE ARTEMIS\nOFFERINGS"} image="/images/img_offerings-header.jpg" bgPos="top center" />
 
             {/* Intro Section */}
             <section className="offerings-intro" style={{ padding: '8rem 0', backgroundColor: 'var(--color-cream)' }}>
@@ -297,7 +297,6 @@ export default function OfferingsPage() {
             <Contact
                 variant="gold"
                 title="Complex lives deserve more than a “Tell us about yourself” box. Let’s meet."
-                image="/images/team/img_coffee.webp"
             />
 
             <Footer variant="simple" />

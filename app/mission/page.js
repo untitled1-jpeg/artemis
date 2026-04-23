@@ -59,7 +59,7 @@ export default function MissionPage() {
             <Nav />
             <PageHero
                 title={"THE ARTEMIS\nMISSION"}
-                image="/images/team/img_mission.webp"
+                image="/images/img_mission-header.jpg"
             />
 
             <section className="mission-editorial" style={{ padding: '6rem 0', backgroundColor: 'var(--color-cream)', color: 'var(--color-teal)' }}>
@@ -97,7 +97,6 @@ export default function MissionPage() {
             <Contact
                 variant="gold"
                 title="Life insurance is too personal for a contact form. Let’s meet in person."
-                image="/images/team/img_coffee.webp"
             />
             <Footer variant="simple" />
         </main>

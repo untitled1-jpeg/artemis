@@ -5,10 +5,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function PageHero({ title, image, bgPos = 'center' }) {
+export default function PageHero({ title, image, bgPos = 'center', mobileBgPos }) {
     const heroRef = useRef(null);
     const imageRef = useRef(null);
     const titleRef = useRef(null);
+    const heroId = title.replace(/[\s\n]+/g, '-').toLowerCase();
 
     useLayoutEffect(() => {
         if (!heroRef.current) return;
@@ -52,8 +53,19 @@ export default function PageHero({ title, image, bgPos = 'center' }) {
 
     return (
         <header className="page-hero" ref={heroRef} style={{ position: 'relative', height: '75vw', maxHeight: '90vh', overflow: 'hidden', display: 'flex', alignItems: 'center', backgroundColor: 'var(--color-teal)' }}>
+            <style>{`
+                .hero-image-${heroId} {
+                    background-position: ${mobileBgPos || bgPos} !important;
+                }
+                @media (min-width: 768px) {
+                    .hero-image-${heroId} {
+                        background-position: ${bgPos} !important;
+                    }
+                }
+            `}</style>
             <div
                 ref={imageRef}
+                className={`hero-image-${heroId}`}
                 style={{
                     position: 'absolute',
                     top: '-5%', // Reduced from -10%
@@ -62,7 +74,6 @@ export default function PageHero({ title, image, bgPos = 'center' }) {
                     height: '110%', // Reduced from 120% for less "zoom"
                     backgroundImage: `url(${image})`,
                     backgroundSize: 'cover',
-                    backgroundPosition: bgPos,
                     filter: 'grayscale(1) brightness(0.6)',
                     zIndex: 1
                 }}
