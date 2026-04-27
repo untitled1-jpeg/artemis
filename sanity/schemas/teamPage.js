@@ -6,6 +6,7 @@ export default {
         { name: 'hero', title: 'Hero Section' },
         { name: 'intro', title: 'Intro Section' },
         { name: 'team', title: 'Team List Section' },
+        { name: 'cta', title: 'CTA Section' },
     ],
     fields: [
         // --- HERO SECTION ---
@@ -77,6 +78,36 @@ export default {
                     },
                 },
             ],
+        },
+
+        // --- CTA SECTION ---
+        {
+            name: 'ctaHeadline',
+            title: 'CTA Headline',
+            type: 'string',
+            group: 'cta',
+            description: 'The headline for the contact block at the bottom of the page.',
+        },
+        {
+            name: 'ctaButtonText',
+            title: 'CTA Button Text',
+            type: 'string',
+            group: 'cta',
+            initialValue: 'CONTACT US',
+        },
+        {
+            name: 'ctaButtonLink',
+            title: 'CTA Button Link',
+            type: 'string',
+            group: 'cta',
+            initialValue: '/connect',
+        },
+        {
+            name: 'ctaImage',
+            title: 'CTA Background Image',
+            type: 'image',
+            group: 'cta',
+            options: { hotspot: true },
         },
     ],
     preview: {

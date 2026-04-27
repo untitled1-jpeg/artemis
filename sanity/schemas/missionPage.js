@@ -6,7 +6,7 @@ export default {
         { name: 'hero', title: 'Hero Section' },
         { name: 'editorial', title: 'Editorial Section' },
         { name: 'advisor', title: 'Advisor Section (Override)' },
-        { name: 'contact', title: 'Contact Section (Override)' },
+        { name: 'cta', title: 'CTA Section' },
     ],
     fields: [
         // --- HERO SECTION ---
@@ -86,13 +86,35 @@ export default {
             description: 'Optional. Leave blank to use the default Advisor component text.',
         },
 
-        // --- CONTACT SECTION ---
+        // --- CTA SECTION ---
         {
-            name: 'contactHeadlineOverride',
-            title: 'Contact Headline Override',
+            name: 'ctaHeadline',
+            title: 'CTA Headline',
             type: 'string',
-            group: 'contact',
-            description: 'Optional. e.g., "Life insurance is too personal for a contact form. Let’s meet in person."',
+            group: 'cta',
+            description: 'The headline for the contact block at the bottom of the page.',
+            initialValue: 'Life insurance is too personal for a contact form. Let’s meet in person.',
+        },
+        {
+            name: 'ctaButtonText',
+            title: 'CTA Button Text',
+            type: 'string',
+            group: 'cta',
+            initialValue: 'CONTACT US',
+        },
+        {
+            name: 'ctaButtonLink',
+            title: 'CTA Button Link',
+            type: 'string',
+            group: 'cta',
+            initialValue: '/connect',
+        },
+        {
+            name: 'ctaImage',
+            title: 'CTA Background Image',
+            type: 'image',
+            group: 'cta',
+            options: { hotspot: true },
         },
     ],
     preview: {
