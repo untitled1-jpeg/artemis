@@ -4,14 +4,16 @@ export default {
     type: 'document',
     groups: [
         { name: 'hero', title: 'Hero Section' },
-        { name: 'form', title: 'Form Configuration' },
+        { name: 'intro', title: 'Intro Section' },
     ],
     fields: [
+        // --- HERO SECTION ---
         {
             name: 'heroHeadline',
             title: 'Hero Headline',
             type: 'string',
             group: 'hero',
+            initialValue: 'CONNECT\nWITH US',
         },
         {
             name: 'heroImage',
@@ -20,27 +22,22 @@ export default {
             group: 'hero',
             options: { hotspot: true },
         },
+
+        // --- INTRO SECTION ---
         {
-            name: 'pageDescription',
-            title: 'Page Description',
+            name: 'introHeadline',
+            title: 'Intro Headline',
+            type: 'string',
+            group: 'intro',
+            description: 'e.g., "We’re here to guide your next step."',
+        },
+        {
+            name: 'introCopy',
+            title: 'Intro Copy',
             type: 'text',
-            group: 'hero',
-            description: 'The short paragraph above the contact form.',
-            rows: 3,
-        },
-        {
-            name: 'formTitle',
-            title: 'Form Title',
-            type: 'string',
-            group: 'form',
-            description: 'e.g., "Send us a message"',
-        },
-        {
-            name: 'submitButtonText',
-            title: 'Submit Button Text',
-            type: 'string',
-            group: 'form',
-            initialValue: 'SEND MESSAGE',
+            group: 'intro',
+            description: 'The paragraph explaining that you prefer a conversation.',
+            rows: 4,
         },
     ],
     preview: {

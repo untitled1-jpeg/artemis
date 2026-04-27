@@ -5,9 +5,10 @@ export default {
     groups: [
         { name: 'hero', title: 'Hero Section' },
         { name: 'intro', title: 'Intro Section' },
-        { name: 'team', title: 'Team Members' },
+        { name: 'team', title: 'Team List Section' },
     ],
     fields: [
+        // --- HERO SECTION ---
         {
             name: 'heroHeadline',
             title: 'Hero Headline',
@@ -22,6 +23,8 @@ export default {
             group: 'hero',
             options: { hotspot: true },
         },
+
+        // --- INTRO SECTION ---
         {
             name: 'introHeadline',
             title: 'Intro Headline',
@@ -36,6 +39,16 @@ export default {
             of: [{ type: 'text', rows: 4 }],
             group: 'intro',
             description: 'The introductory paragraphs about why Artemis was founded.',
+        },
+
+        // --- TEAM LIST SECTION ---
+        {
+            name: 'teamListHeadline',
+            title: 'Team List Headline',
+            type: 'string',
+            group: 'team',
+            initialValue: 'ARTEMIS TEAM',
+            description: 'The title displayed above the list of team members.',
         },
         {
             name: 'teamMembers',

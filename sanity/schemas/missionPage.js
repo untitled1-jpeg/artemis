@@ -4,14 +4,18 @@ export default {
     type: 'document',
     groups: [
         { name: 'hero', title: 'Hero Section' },
-        { name: 'content', title: 'Mission Content' },
+        { name: 'editorial', title: 'Editorial Section' },
+        { name: 'advisor', title: 'Advisor Section (Override)' },
+        { name: 'contact', title: 'Contact Section (Override)' },
     ],
     fields: [
+        // --- HERO SECTION ---
         {
             name: 'heroHeadline',
             title: 'Hero Headline',
             type: 'string',
             group: 'hero',
+            initialValue: 'THE ARTEMIS\nMISSION',
         },
         {
             name: 'heroImage',
@@ -20,28 +24,75 @@ export default {
             group: 'hero',
             options: { hotspot: true },
         },
+
+        // --- EDITORIAL SECTION ---
         {
-            name: 'missionStatements',
-            title: 'Mission Statements',
+            name: 'editorialHeadline',
+            title: 'Editorial Headline',
+            type: 'string',
+            group: 'editorial',
+            description: 'e.g., "We approach every relationship with both creativity and sensitivity..."',
+        },
+        {
+            name: 'editorialParagraphs',
+            title: 'Editorial Paragraphs',
             type: 'array',
-            group: 'content',
-            description: 'The alternating text and image blocks on the mission page.',
-            of: [
-                {
-                    type: 'object',
-                    fields: [
-                        { name: 'heading', title: 'Heading', type: 'string', description: 'e.g., "Life Insurance Needs Have Become Very Complex"' },
-                        { name: 'body', title: 'Body Copy', type: 'text', rows: 4 },
-                        { name: 'image', title: 'Related Image', type: 'image', options: { hotspot: true } },
-                    ],
-                    preview: {
-                        select: {
-                            title: 'heading',
-                            media: 'image',
-                        },
-                    },
-                },
-            ],
+            of: [{ type: 'text', rows: 4 }],
+            group: 'editorial',
+        },
+        {
+            name: 'button1Text',
+            title: 'Button 1 Text',
+            type: 'string',
+            group: 'editorial',
+            initialValue: 'OUR OFFERINGS',
+        },
+        {
+            name: 'button1Link',
+            title: 'Button 1 Link',
+            type: 'string',
+            group: 'editorial',
+            initialValue: '/offerings',
+        },
+        {
+            name: 'button2Text',
+            title: 'Button 2 Text',
+            type: 'string',
+            group: 'editorial',
+            initialValue: 'OUR TEAM',
+        },
+        {
+            name: 'button2Link',
+            title: 'Button 2 Link',
+            type: 'string',
+            group: 'editorial',
+            initialValue: '/team',
+        },
+
+        // --- ADVISOR SECTION ---
+        {
+            name: 'advisorHeadline',
+            title: 'Advisor Headline Override',
+            type: 'string',
+            group: 'advisor',
+            description: 'Optional. Leave blank to use the default Advisor component text.',
+        },
+        {
+            name: 'advisorCopy',
+            title: 'Advisor Copy Override',
+            type: 'text',
+            rows: 4,
+            group: 'advisor',
+            description: 'Optional. Leave blank to use the default Advisor component text.',
+        },
+
+        // --- CONTACT SECTION ---
+        {
+            name: 'contactHeadlineOverride',
+            title: 'Contact Headline Override',
+            type: 'string',
+            group: 'contact',
+            description: 'Optional. e.g., "Life insurance is too personal for a contact form. Let’s meet in person."',
         },
     ],
     preview: {
