@@ -22,25 +22,50 @@ export default {
             options: { hotspot: true },
         },
         {
-            name: 'offeringsList',
-            title: 'Offerings',
+            name: 'offeringsCategories',
+            title: 'Offering Categories',
             type: 'array',
             group: 'offerings',
-            description: 'Add, remove, and edit the services offered by Artemis.',
+            description: 'Bucket offerings by type (e.g., "Insurance", "Annuities").',
             of: [
                 {
                     type: 'object',
                     fields: [
-                        { name: 'title', title: 'Offering Title', type: 'string', description: 'e.g., "Policy Review"' },
-                        { name: 'description', title: 'Description', type: 'text', rows: 4 },
-                        { name: 'icon', title: 'Icon (Optional)', type: 'image', description: 'Upload an SVG or PNG icon.' },
+                        { 
+                            name: 'categoryName', 
+                            title: 'Category Name', 
+                            type: 'string', 
+                            description: 'e.g., "INSURANCE" or "ANNUITIES"' 
+                        },
+                        { 
+                            name: 'products', 
+                            title: 'Products List', 
+                            type: 'array', 
+                            of: [{ type: 'string' }],
+                            description: 'The items listed in the left column (e.g., "Term Life Insurance").'
+                        },
+                        { 
+                            name: 'needs', 
+                            title: 'Needs List', 
+                            type: 'array', 
+                            of: [{ type: 'string' }],
+                            description: 'The items listed under the "NEEDS" column on the right.'
+                        },
+                        {
+                            name: 'disclaimer',
+                            title: 'Disclaimer / Footer Text',
+                            type: 'text',
+                            rows: 3,
+                            description: 'Optional small text displayed at the bottom of the section (e.g., the variable life policy disclaimer).'
+                        }
                     ],
                     preview: {
                         select: {
-                            title: 'title',
-                            subtitle: 'description',
-                            media: 'icon',
+                            title: 'categoryName',
                         },
+                        prepare({ title }) {
+                            return { title: title || 'Untitled Category' };
+                        }
                     },
                 },
             ],
