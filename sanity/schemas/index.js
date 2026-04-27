@@ -1,7 +1,15 @@
-import hero from './hero';
-import mission from './mission';
-import team from './team';
-import advisor from './advisor';
-import offerings from './offerings';
+import globalSettings from './globalSettings';
+import homePage from './homePage';
+import teamPage from './teamPage';
+import offeringsPage from './offeringsPage';
+import missionPage from './missionPage';
+import connectPage from './connectPage';
 
-export const schemaTypes = [hero, mission, team, advisor, offerings];
+export const schemaTypes = [
+    globalSettings,
+    homePage,
+    teamPage,
+    offeringsPage,
+    missionPage,
+    connectPage,
+];
