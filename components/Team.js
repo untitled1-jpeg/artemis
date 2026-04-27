@@ -83,6 +83,7 @@ export default function Team({ data }) {
                             sizes="(max-width: 768px) 100vw, 50vw"
                             style={{
                                 objectFit: 'cover',
+                                objectPosition: 'top',
                                 filter: 'grayscale(1)'
                             }}
                             priority={idx === 0}

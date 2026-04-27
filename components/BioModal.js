@@ -2,6 +2,12 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 
+const formatSuperscript = (text) => {
+    if (typeof text !== 'string') return text;
+    if (!text.includes('®')) return text;
+    return <span dangerouslySetInnerHTML={{ __html: text.replace(/®/g, '<sup>&reg;</sup>') }} />;
+};
+
 export default function BioModal({ isOpen, onClose, member }) {
     const overlayRef = useRef(null);
     const panelRef = useRef(null);
@@ -132,7 +138,7 @@ export default function BioModal({ isOpen, onClose, member }) {
                                 {member?.name}
                             </h2>
                             <h3 style={{ fontSize: '1.1rem', color: 'var(--color-teal)', opacity: 0.8, fontStyle: 'italic', fontWeight: '400', fontFamily: 'var(--font-sans)' }}>
-                                {member?.title}
+                                {formatSuperscript(member?.title)}
                             </h3>
                             <div style={{ height: '1px', width: '60px', backgroundColor: 'var(--color-gold)', margin: '2rem 0' }}></div>
                             <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
@@ -152,7 +158,7 @@ export default function BioModal({ isOpen, onClose, member }) {
 
                     <div className="body-lg" style={{ lineHeight: '1.8', color: 'var(--color-teal)' }}>
                         {member?.bio?.split('\n').map((para, i) => (
-                            <p key={i} style={{ marginBottom: '2rem' }}>{para}</p>
+                            <p key={i} style={{ marginBottom: '2rem' }}>{formatSuperscript(para)}</p>
                         ))}
                     </div>
                 </div>

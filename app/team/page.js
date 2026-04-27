@@ -12,6 +12,12 @@ import BioModal from '../../components/BioModal';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const formatSuperscript = (text) => {
+    if (typeof text !== 'string') return text;
+    if (!text.includes('®')) return text;
+    return <span dangerouslySetInnerHTML={{ __html: text.replace(/®/g, '<sup>&reg;</sup>') }} />;
+};
+
 function TeamMember({ name, title, bio, summary, image, email, linkedin, onReadMore, delay = 0 }) {
     const memberRef = useRef(null);
 
@@ -45,10 +51,10 @@ function TeamMember({ name, title, bio, summary, image, email, linkedin, onReadM
             </div>
             <div>
                 <h3 style={{ color: 'var(--color-gold)', fontSize: '1.35rem', fontFamily: 'var(--font-sans)', marginBottom: '1.5rem', fontWeight: '400', textTransform: 'none', letterSpacing: 'normal' }}>
-                    <span style={{ letterSpacing: '0.15rem' }}>{name.toUpperCase()}</span> <span style={{ opacity: 0.8, fontWeight: '300', margin: '0 0.6rem' }}>|</span> <span style={{ fontStyle: 'italic', opacity: 0.9 }}>{title}</span>
+                    <span style={{ letterSpacing: '0.15rem' }}>{name.toUpperCase()}</span> <span style={{ opacity: 0.8, fontWeight: '300', margin: '0 0.6rem' }}>|</span> <span style={{ fontStyle: 'italic', opacity: 0.9 }}>{formatSuperscript(title)}</span>
                 </h3>
                 <p className="body-sm" style={{ color: 'rgba(255,255,255,0.8)', marginBottom: '2rem', whiteSpace: 'pre-line' }}>
-                    {summary ? summary : (bio.length > 280 ? `${bio.substring(0, 280)}...` : bio)}
+                    {formatSuperscript(summary ? summary : (bio.length > 280 ? `${bio.substring(0, 280)}...` : bio))}
                 </p>
                 <div style={{ display: 'flex', gap: '1.2rem', alignItems: 'center' }}>
                     <a href={`mailto:${email}`} style={{ color: 'var(--color-gold)', display: 'flex', alignItems: 'center' }}>
@@ -164,7 +170,7 @@ export default function Team() {
                         name="Anne Jones"
                         title="Founder & CEO"
                         image="/images/img_anne.jpg"
-                        bio={`Anne Jones is the Founder and CEO of Artemis. She is responsible for overseeing all aspects of the life insurance process, as well as cultivating new relationships with advisory networks of attorneys, accountants, family offices and entrepreneurs. Anne leads the strategic decision making and vision for the firm.\n\nAnne has spent the last 20 years in the insurance industry committed to providing objective advice and peerless service. From underwriting to case design and implementation, her focus and priority have always been built on a foundation of service and transparency.\n\nAnne believes in industry involvement, as well as continuing education in the insurance space. She is a member of the Million Dollar Round Table, Finseca, NAIFA, Dallas Estate Planning Council, Texas Wall Street Women, and the Financial Planners Association. Anne is a member of the Communities Foundation of Texas Advisory Council. She is FINRA licensed with her Series 7, 24, 63, and 66, in addition to her General Lines Life and Health license.\n\nAnne is a graduate of the University of Georgia, but after studying and working abroad she found herself returning to Dallas to plant roots and find a career. She has twin 13 year old boys and two labs. They enjoy golfing together and the beach.`}
+                        bio={`Anne Jones is the Founder and CEO of Artemis. She is responsible for overseeing all aspects of the life insurance process, as well as cultivating new relationships with advisory networks of attorneys, accountants, family offices and entrepreneurs. Anne leads the strategic decision making and vision for the firm.\n\nAnne has spent the last 20 years in the insurance industry committed to providing objective advice and peerless service. From underwriting to case design and implementation, her focus and priority have always been built on a foundation of service and transparency.\n\nAnne believes in industry involvement, as well as continuing education in the insurance space. She is a member of the Million Dollar Round Table, Finseca, NAIFA, Dallas Estate Planning Council, Texas Wall Street Women and the Financial Planners Association. Anne is a member of the Communities Foundation of Texas Advisory Council. She is FINRA licensed with her Series 7, 24, 63 and 66, in addition to her General Lines Life and Health license.\n\nAnne is a graduate of the University of Georgia, but after studying and working abroad she found herself returning to Dallas to plant roots and find a career. She has twin 13-year-old boys and two labs. They enjoy golfing together and the beach.`}
                         summary={`Anne Jones is the Founder and CEO of Artemis. She is responsible for overseeing all aspects of the life insurance process, as well as cultivating new relationships with advisory networks of attorneys, accountants, family offices and entrepreneurs. Anne leads the strategic decision making and vision for the firm. Anne has spent the last 20 years in the insurance industry committed to providing objective advice and peerless service. From underwriting to case design and implementation, her focus and priority have always been built on a foundation of service and transparency.`}
                         email="afj@artemisdallas.com"
                         linkedin="https://www.linkedin.com/in/anne-jones/"
