@@ -1,0 +1,82 @@
+
+> artemis-next@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://10.0.0.90:3000
+- Environments: .env.local
+
+✓ Starting...
+✓ Ready in 713ms
+ GET /team 200 in 613ms (compile: 410ms, render: 204ms)
+ GET /team 200 in 613ms (compile: 439ms, render: 175ms)
+ GET /team 200 in 55ms (compile: 3ms, render: 52ms)
+✓ Compiled in 109ms
+ GET / 200 in 664ms (compile: 54ms, render: 610ms)
+✓ Compiled in 19ms
+ GET /team 200 in 126ms (compile: 35ms, render: 91ms)
+✓ Compiled in 49ms
+ GET /team 200 in 78ms (compile: 37ms, render: 41ms)
+ GET / 200 in 7.7s (compile: 132ms, render: 7.5s)
+ GET /team 200 in 20ms (compile: 5ms, render: 14ms)
+✓ Compiled in 58ms
+ GET / 200 in 491ms (compile: 16ms, render: 475ms)
+ GET /connect 200 in 118ms (compile: 106ms, render: 12ms)
+ GET /team 200 in 61ms (compile: 46ms, render: 15ms)
+ GET / 200 in 516ms (compile: 12ms, render: 504ms)
+ GET /team 200 in 19ms (compile: 5ms, render: 13ms)
+ GET /studio 200 in 5.0s (compile: 2.1s, render: 2.9s)
+✓ Compiled in 169ms
+✓ Compiled in 82ms
+✓ Compiled in 78ms
+✓ Compiled in 91ms
+✓ Compiled in 153ms
+✓ Compiled in 69ms
+✓ Compiled in 54ms
+ GET / 200 in 755ms (compile: 29ms, render: 726ms)
+ GET /mission 200 in 81ms (compile: 68ms, render: 13ms)
+ GET / 200 in 939ms (compile: 86ms, render: 853ms)
+✓ Compiled in 118ms
+✓ Compiled in 289ms
+ GET /mission 200 in 120ms (compile: 94ms, render: 26ms)
+ GET /team 200 in 79ms (compile: 63ms, render: 16ms)
+✓ Compiled in 27ms
+✓ Compiled in 24ms
+✓ Compiled in 170ms
+ GET /mission 200 in 134ms (compile: 87ms, render: 47ms)
+ GET / 200 in 967ms (compile: 80ms, render: 886ms)
+✓ Compiled in 46ms
+✓ Compiled in 30ms
+ GET /mission 200 in 56ms (compile: 42ms, render: 14ms)
+✓ Compiled in 31ms
+✓ Compiled in 12ms
+✓ Compiled in 15ms
+ GET / 200 in 777ms (compile: 89ms, render: 687ms)
+✓ Compiled in 13ms
+✓ Compiled in 9ms
+✓ Compiled in 28ms
+ GET /mission 200 in 51ms (compile: 39ms, render: 12ms)
+✓ Compiled in 32ms
+ GET /team 200 in 76ms (compile: 58ms, render: 18ms)
+ GET / 200 in 503ms (compile: 65ms, render: 438ms)
+ GET /offerings 200 in 222ms (compile: 210ms, render: 12ms)
+✓ Compiled in 35ms
+ GET /team 200 in 104ms (compile: 73ms, render: 31ms)
+ GET /mission 200 in 42ms (compile: 32ms, render: 10ms)
+✓ Compiled in 38ms
+ GET / 200 in 625ms (compile: 12ms, render: 613ms)
+ GET /mission 200 in 79ms (compile: 60ms, render: 19ms)
+ GET /team 200 in 55ms (compile: 40ms, render: 15ms)
+✓ Compiled in 34ms
+ GET /offerings 200 in 53ms (compile: 41ms, render: 12ms)
+✓ Compiled in 69ms
+✓ Compiled in 15ms
+ GET /connect 200 in 141ms (compile: 126ms, render: 14ms)
+ GET /team 200 in 44ms (compile: 10ms, render: 33ms)
+ GET / 200 in 838ms (compile: 103ms, render: 735ms)
+✓ Compiled in 141ms
+ GET / 200 in 904ms (compile: 159ms, render: 745ms)
+ GET / 200 in 778ms (compile: 14ms, render: 763ms)
+✓ Compiled in 86ms
+ GET /connect 200 in 52ms (compile: 19ms, render: 33ms)

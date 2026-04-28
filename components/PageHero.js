@@ -68,13 +68,13 @@ export default function PageHero({ title, image, bgPos = 'center', mobileBgPos }
                 className={`hero-image-${heroId}`}
                 style={{
                     position: 'absolute',
-                    top: '-5%', // Reduced from -10%
+                    top: '-5%', 
                     left: 0,
                     width: '100%',
-                    height: '110%', // Reduced from 120% for less "zoom"
+                    height: '110%', 
                     backgroundImage: `url(${image})`,
                     backgroundSize: 'cover',
-                    filter: 'grayscale(1) brightness(0.6)',
+                    filter: 'grayscale(1) sepia(0.15) brightness(0.75)',
                     zIndex: 1
                 }}
             />
@@ -85,7 +85,7 @@ export default function PageHero({ title, image, bgPos = 'center', mobileBgPos }
                     left: 0,
                     width: '100%',
                     height: '100%',
-                    background: 'linear-gradient(to right, rgba(0,0,0,0.5) 0%, transparent 70%)',
+                    background: 'linear-gradient(to right, rgba(0,0,0,0.25) 0%, transparent 50%)',
                     zIndex: 2,
                     pointerEvents: 'none'
                 }}
@@ -106,8 +106,8 @@ export default function PageHero({ title, image, bgPos = 'center', mobileBgPos }
                 </h1>
             </div>
             <div className="scroll-indicator">
-                <svg className="scroll-arrow" viewBox="0 0 10 60" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 0L3 50L0 50L5 60L10 50L7 50L7 0Z" />
+                <svg className="scroll-arrow" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square">
+                    <path d="M6 9L12 15L18 9" />
                 </svg>
             </div>
         </header>

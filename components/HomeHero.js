@@ -159,8 +159,8 @@ export default function HomeHero({ data }) {
             </div>
 
             <div className="scroll-indicator">
-                <svg className="scroll-arrow" viewBox="0 0 10 60" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 0L3 50L0 50L5 60L10 50L7 50L7 0Z" />
+                <svg className="scroll-arrow" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square">
+                    <path d="M6 9L12 15L18 9" />
                 </svg>
             </div>
         </header>

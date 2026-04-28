@@ -8,9 +8,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const CAROUSEL_IMAGES = [
-    '/images/team/Test-photo.webp',
-    '/images/team/img_team-2.webp',
-    '/images/team/img_team-3.webp'
+    '/images/img_anne-home.jpg',
+    '/images/img_bianca-home.jpg',
+    '/images/img_lulu-home.jpg'
 ];
 
 export default function Team({ data }) {
@@ -37,7 +37,34 @@ export default function Team({ data }) {
         return () => clearInterval(interval);
     }, []);
 
-    // Handle Image Transitions
+    // Handle Image Transitions and Parallax
+    useEffect(() => {
+        const images = imagesContainerRef.current?.querySelectorAll('.carousel-img');
+        if (!images) return;
+
+        const ctx = gsap.context(() => {
+            // Parallax effect
+            images.forEach(img => {
+                gsap.fromTo(img,
+                    { yPercent: 0 },
+                    {
+                        yPercent: -20, // Moves up by 20% of 125% height (25% of container)
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: sectionRef.current,
+                            start: 'top bottom',
+                            end: 'bottom top',
+                            scrub: true
+                        }
+                    }
+                );
+            });
+        }, sectionRef);
+
+        return () => ctx.revert();
+    }, []);
+
+    // Handle Image Opacity Transitions
     useEffect(() => {
         const images = imagesContainerRef.current?.querySelectorAll('.carousel-img');
         if (!images) return;
@@ -45,7 +72,7 @@ export default function Team({ data }) {
         images.forEach((img, idx) => {
             gsap.to(img, {
                 opacity: idx === currentIndex ? 1 : 0,
-                duration: 1,
+                duration: 1.2,
                 ease: 'power2.inOut'
             });
         });
@@ -71,7 +98,7 @@ export default function Team({ data }) {
                             top: 0,
                             left: 0,
                             width: '100%',
-                            height: '100%',
+                            height: '125%', // 25% slack for pronounced parallax
                             opacity: idx === 0 ? 1 : 0,
                             zIndex: idx === currentIndex ? 2 : 1
                         }}
@@ -83,7 +110,7 @@ export default function Team({ data }) {
                             sizes="(max-width: 768px) 100vw, 50vw"
                             style={{
                                 objectFit: 'cover',
-                                objectPosition: 'top',
+                                objectPosition: 'center',
                                 filter: 'grayscale(1)'
                             }}
                             priority={idx === 0}
