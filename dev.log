@@ -88,3 +88,11 @@
  GET /connect 200 in 62ms (compile: 12ms, render: 50ms)
 ✓ Compiled in 138ms
  GET /connect 200 in 57ms (compile: 12ms, render: 45ms)
+ GET / 200 in 764ms (compile: 202ms, render: 562ms)
+ GET / 200 in 562ms (compile: 8ms, render: 554ms)
+ GET / 200 in 530ms (compile: 13ms, render: 517ms)
+ GET / 200 in 180ms (compile: 15ms, render: 165ms)
+ GET / 200 in 687ms (compile: 1820µs, render: 685ms)
+ GET / 200 in 211ms (compile: 12ms, render: 199ms)
+ GET / 200 in 684ms (compile: 6ms, render: 678ms)
+ GET / 200 in 886ms (compile: 34ms, render: 851ms)
