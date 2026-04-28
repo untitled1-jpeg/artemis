@@ -8,9 +8,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const CAROUSEL_IMAGES = [
-    '/images/img_anne-home.jpg',
-    '/images/img_bianca-home.jpg',
-    '/images/img_lulu-home.jpg'
+    '/images/img_anne-v2.jpg',
+    '/images/img_bianca-v2.jpg',
+    '/images/img_lulu-v2.jpg'
 ];
 
 export default function Team({ data }) {
