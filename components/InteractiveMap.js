@@ -36,7 +36,7 @@ export default function InteractiveMap() {
         <div className="artemis-map-container" style={{ width: '100%', height: '100%', position: 'relative' }}>
             <MapContainer
                 center={position}
-                zoom={12}
+                zoom={14}
                 scrollWheelZoom={false}
                 zoomControl={false}
                 attributionControl={false}

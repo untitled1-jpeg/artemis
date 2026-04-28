@@ -94,22 +94,24 @@ export default function ConnectPage() {
                             <div>
                                 <h3 className="serif" style={{ fontSize: '1.875rem', marginBottom: '0.6rem', letterSpacing: '0.1em', lineHeight: '1.25', fontWeight: '500' }}>IN PERSON</h3>
                                 <p className="serif" style={{ fontSize: '1.875rem', opacity: 0.9, lineHeight: '1.2' }}>
-                                    2750 Fairmount<br />
-                                    Dallas, TX 75201
+                                    <a href="https://maps.google.com/?q=2750+Fairmount+St,+Dallas,+TX+75201" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit' }}>
+                                        2750 Fairmount<br />
+                                        Dallas, TX 75201
+                                    </a>
                                 </p>
                             </div>
 
                             <div>
                                 <h3 className="serif" style={{ fontSize: '1.875rem', marginBottom: '0.6rem', letterSpacing: '0.1em', lineHeight: '1.25', fontWeight: '500' }}>CALL</h3>
                                 <p className="serif" style={{ fontSize: '1.875rem', opacity: 0.9, lineHeight: '1.2' }}>
-                                    214.123.4567
+                                    <a href="tel:2141234567" style={{ textDecoration: 'none', color: 'inherit' }}>214.123.4567</a>
                                 </p>
                             </div>
 
                             <div>
                                 <h3 className="serif" style={{ fontSize: '1.875rem', marginBottom: '0.6rem', letterSpacing: '0.1em', lineHeight: '1.25', fontWeight: '500' }}>EMAIL</h3>
                                 <p className="serif" style={{ fontSize: '1.875rem', opacity: 0.9, lineHeight: '1.2' }}>
-                                    contact@artemisdallas.com
+                                    <a href="mailto:contact@artemisdallas.com" style={{ textDecoration: 'none', color: 'inherit' }}>contact@artemisdallas.com</a>
                                 </p>
                             </div>
                         </div>
