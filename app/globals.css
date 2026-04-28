@@ -525,8 +525,8 @@ nav.is-internal .nav-logo-target {
 }
 
 .scroll-arrow {
-  width: 28px;
-  height: 28px;
+  width: 14px;
+  height: 84px;
   color: var(--color-gold);
   animation: scroll-bounce 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
 }
