@@ -37,12 +37,12 @@ export default function Footer({ variant = 'full' }) {
                     </a>
                     <span style={{ margin: '0 1rem', opacity: 0.5 }}>|</span>
                     <a
-                        href="tel:214123456"
+                        href="tel:9729089027"
                         style={{ color: 'inherit', textDecoration: 'none', transition: 'opacity 0.3s' }}
                         onMouseEnter={(e) => e.target.style.opacity = '1'}
                         onMouseLeave={(e) => e.target.style.opacity = '0.8'}
                     >
-                        214.123.456
+                        972.908.9027
                     </a>
                 </div>
 
@@ -58,19 +58,19 @@ export default function Footer({ variant = 'full' }) {
                     fontFamily: 'system-ui, -apple-system, sans-serif'
                 }}>
                     <p style={{ marginBottom: '0.75rem' }}>
-                        Securities and investment advisory services offered through Integrity Alliance, LLC, Member SIPC. Integrity Wealth is a marketing name for Integrity Alliance, LLC. Artemis is not affiliated with Integrity Wealth.
+                        Securities and investment advisory services offered through Integrity Alliance, LLC, Member SIPC. Integrity Wealth is a marketing name for Integrity Alliance, LLC. Artemis Partners is not affiliated with Integrity Wealth.
                     </p>
                     <p style={{ marginBottom: '0.75rem' }}>
-                        Death and Tax Advisors, LLC dba Artemis and the above firms are independent and non-affiliated. Tax and legal advice are not offed through Integrity Wealth.
+                        Death and Tax Advisors, LLC dba Artemis Partners and the above firms are independent and non-affiliated. Tax and legal advice are not offed through Integrity Wealth.
                     </p>
                     <p style={{ marginBottom: '0.75rem' }}>
-                        Artemis is presently licensed to sell traditional life insurance in AZ, CA, CO, DE, FL, IL, LA, MA, MI, MT, NC, NJ, OK, TN, TX, VA, and WY. Variable life and annuity products, as well as other securities products, may be sold in AZ, CA, CO, DE, FL, IL, LA, MA, MI, MT, NC, NJ, OK, TN, TX, VA, and WY.
+                        Artemis is presently licensed to sell traditional life insurance in AR, AZ, CA, CO, DC, DE, FL, IL, LA, MA, ME, MI, MO, MT, NC, NJ, OK, TN, TX, VA, VT, and WY. Variable life and annuity products, as well as other securities products, may be sold in AR, AZ, CA, CO, DE, FL, IL, LA, MA, ME, MI, MO, NC, NJ, OH, OK, PA, TN, TX, UT, VA, VT, WA, and WY.
                     </p>
                     <p style={{ marginBottom: '0.75rem' }}>
                         This site is published for residents of the United States only. Representatives may only conduct business with residents of the states and jurisdictions in which they are properly registered. Therefore, a response to a request for information may be delayed until appropriate registration is obtained or exemption from registration is determined. Not all services referenced on this site are available in every state and through every advisor listed. Check the background of this firm on FINRA’s BrokerCheck
                     </p>
                     <p>
-                        © 2025 by Death and Tax Advisors, LLC dba Artemis <span style={{ margin: '0 1rem', opacity: 0.3 }}>|</span> <a href="https://brokercheck.finra.org/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>FINRA’s BrokerCheck</a>
+                        © 2026 by Death and Tax Advisors, LLC dba Artemis <span style={{ margin: '0 1rem', opacity: 0.3 }}>|</span> <a href="https://brokercheck.finra.org/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>FINRA’s BrokerCheck</a>
                     </p>
                 </div>
             </div>

@@ -97,6 +97,7 @@ export default function MissionPage() {
             <Contact
                 variant="gold"
                 title="Life insurance is too personal for a contact form. Let’s meet in person."
+                image="/images/img_coffee-cta-01.jpg"
             />
             <Footer variant="simple" />
         </main>

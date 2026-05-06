@@ -297,6 +297,7 @@ export default function OfferingsPage() {
             <Contact
                 variant="gold"
                 title="Complex lives deserve more than a “Tell us about yourself” box. Let’s meet."
+                image="/images/img_coffee-cta-02.jpg"
             />
 
             <Footer variant="simple" />

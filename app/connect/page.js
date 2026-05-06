@@ -104,7 +104,7 @@ export default function ConnectPage() {
                             <div>
                                 <h3 className="serif" style={{ fontSize: '1.875rem', marginBottom: '0.6rem', letterSpacing: '0.1em', lineHeight: '1.25', fontWeight: '500' }}>CALL</h3>
                                 <p className="serif" style={{ fontSize: '1.875rem', opacity: 0.9, lineHeight: '1.2' }}>
-                                    <a href="tel:2141234567" style={{ textDecoration: 'none', color: 'inherit' }}>214.123.4567</a>
+                                    <a href="tel:9729089027" style={{ textDecoration: 'none', color: 'inherit' }}>972.908.9027</a>
                                 </p>
                             </div>
 
