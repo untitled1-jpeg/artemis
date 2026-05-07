@@ -3,6 +3,8 @@ import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import { PortableText } from '@portabletext/react';
+
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Advisor({ data, variant = 'light' }) {
@@ -59,7 +61,20 @@ export default function Advisor({ data, variant = 'light' }) {
                     <h2 className="serif reveal-wipe" style={{ color: 'var(--color-gold)', fontSize: '40.5px', marginBottom: 'var(--editorial-gap)', letterSpacing: '0.25rem' }}>
                         <span className="reveal-text-wipe advisor-title-wipe" style={{ display: 'block' }}>{content.title}</span>
                     </h2>
-                    <p className="advisor-body" style={{ color: isDark ? 'var(--color-white)' : 'var(--color-teal)', opacity: isDark ? 0.9 : 1 }}>{content.body}</p>
+                    {typeof content.body === 'string' ? (
+                        <p className="advisor-body" style={{ color: isDark ? 'var(--color-white)' : 'var(--color-teal)', opacity: isDark ? 0.9 : 1 }}>{content.body}</p>
+                    ) : (
+                        <div className="advisor-body" style={{ color: isDark ? 'var(--color-white)' : 'var(--color-teal)', opacity: isDark ? 0.9 : 1 }}>
+                            <PortableText 
+                                value={content.body} 
+                                components={{
+                                    block: {
+                                        normal: ({children}) => <p style={{ marginBottom: 'var(--space-3)' }}>{children}</p>,
+                                    }
+                                }} 
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
         </section>

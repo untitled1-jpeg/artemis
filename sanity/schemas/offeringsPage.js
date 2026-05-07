@@ -4,10 +4,13 @@ export default {
     type: 'document',
     groups: [
         { name: 'hero', title: 'Hero Section' },
+        { name: 'intro', title: 'Intro Section' },
         { name: 'offerings', title: 'Offerings List' },
+        { name: 'assessment', title: 'Assessment Section' },
         { name: 'cta', title: 'CTA Section' },
     ],
     fields: [
+        // --- HERO SECTION ---
         {
             name: 'heroHeadline',
             title: 'Hero Headline',
@@ -22,6 +25,23 @@ export default {
             group: 'hero',
             options: { hotspot: true },
         },
+
+        // --- INTRO SECTION ---
+        {
+            name: 'introHeadline',
+            title: 'Intro Headline',
+            type: 'string',
+            group: 'intro',
+        },
+        {
+            name: 'introCopy',
+            title: 'Intro Copy',
+            type: 'array',
+            of: [{type: 'block'}],
+            group: 'intro',
+        },
+
+        // --- OFFERINGS LIST ---
         {
             name: 'offeringsCategories',
             title: 'Offering Categories',
@@ -55,8 +75,8 @@ export default {
                         {
                             name: 'disclaimer',
                             title: 'Disclaimer / Footer Text',
-                            type: 'text',
-                            rows: 3,
+                            type: 'array',
+                            of: [{type: 'block'}],
                             description: 'Optional small text displayed at the bottom of the section (e.g., the variable life policy disclaimer).'
                         }
                     ],

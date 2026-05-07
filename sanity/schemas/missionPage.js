@@ -37,7 +37,7 @@ export default {
             name: 'editorialParagraphs',
             title: 'Editorial Paragraphs',
             type: 'array',
-            of: [{ type: 'text', rows: 4 }],
+            of: [{ type: 'block' }],
             group: 'editorial',
         },
         {

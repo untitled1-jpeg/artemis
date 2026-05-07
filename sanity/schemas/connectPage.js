@@ -34,10 +34,10 @@ export default {
         {
             name: 'introCopy',
             title: 'Intro Copy',
-            type: 'text',
+            type: 'array',
+            of: [{type: 'block'}],
             group: 'intro',
             description: 'The paragraph explaining that you prefer a conversation.',
-            rows: 4,
         },
     ],
     preview: {

@@ -5,9 +5,12 @@ import Image from 'next/image';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import { PortableText } from '@portabletext/react';
+
 gsap.registerPlugin(ScrollTrigger);
 
 const CAROUSEL_IMAGES = [
+    '/images/img_team-home.jpg',
     '/images/img_anne-v2.jpg',
     '/images/img_bianca-v2.jpg',
     '/images/img_lulu-v2.jpg'
@@ -121,7 +124,20 @@ export default function Team({ data }) {
             <div className="team-content" ref={contentRef} style={{ opacity: 1 }}>
                 <div className="split-content-anchor" style={{ maxWidth: '480px' }}>
                     <h2 className="serif" style={{ letterSpacing: '0.25rem', marginBottom: 'var(--editorial-gap)' }}>{content.title}</h2>
-                    <p style={{ lineHeight: '1.7', marginBottom: 'var(--editorial-gap)', fontWeight: '300' }}>{content.text}</p>
+                    {typeof content.text === 'string' ? (
+                        <p style={{ lineHeight: '1.7', marginBottom: 'var(--editorial-gap)', fontWeight: '300' }}>{content.text}</p>
+                    ) : (
+                        <div style={{ marginBottom: 'var(--editorial-gap)' }}>
+                            <PortableText 
+                                value={content.text} 
+                                components={{
+                                    block: {
+                                        normal: ({children}) => <p style={{ lineHeight: '1.7', marginBottom: 'var(--space-3)', fontWeight: '300' }}>{children}</p>,
+                                    }
+                                }} 
+                            />
+                        </div>
+                    )}
                     <Link href="/team" className="learn-more" style={{ color: 'white', cursor: 'pointer' }}>
                         <span className="cta-text">{content.ctaLabel}</span>&rarr;
                     </Link>

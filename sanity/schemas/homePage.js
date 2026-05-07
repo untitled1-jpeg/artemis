@@ -7,6 +7,7 @@ export default {
         { name: 'mission', title: 'Mission Section' },
         { name: 'team', title: 'Team Section' },
         { name: 'offerings', title: 'Offerings Section' },
+        { name: 'advisor', title: 'Advisor Section' },
         { name: 'cta', title: 'CTA Section' },
     ],
     fields: [
@@ -45,9 +46,9 @@ export default {
         {
             name: 'missionCopy',
             title: 'Mission Copy',
-            type: 'text',
+            type: 'array',
+            of: [{ type: 'block' }],
             group: 'mission',
-            rows: 4,
         },
         {
             name: 'missionButtonText',
@@ -82,9 +83,9 @@ export default {
         {
             name: 'teamCopy',
             title: 'Team Copy',
-            type: 'text',
+            type: 'array',
+            of: [{ type: 'block' }],
             group: 'team',
-            rows: 4,
         },
         {
             name: 'teamButtonText',
@@ -120,9 +121,9 @@ export default {
         {
             name: 'offeringsCopy',
             title: 'Offerings Copy',
-            type: 'text',
+            type: 'array',
+            of: [{ type: 'block' }],
             group: 'offerings',
-            rows: 4,
             description: 'Optional introductory text for the offerings section.',
         },
         {
@@ -136,6 +137,22 @@ export default {
             title: 'Offerings Button Link',
             type: 'string',
             group: 'offerings',
+        },
+
+        // --- ADVISOR SECTION ---
+        {
+            name: 'advisorHeadline',
+            title: 'Advisor Headline',
+            type: 'string',
+            group: 'advisor',
+            initialValue: 'ADVISOR TO THE ADVISORS',
+        },
+        {
+            name: 'advisorCopy',
+            title: 'Advisor Copy',
+            type: 'array',
+            of: [{ type: 'block' }],
+            group: 'advisor',
         },
 
         // --- CTA SECTION ---

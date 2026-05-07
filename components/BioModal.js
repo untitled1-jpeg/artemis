@@ -2,6 +2,8 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 
+import { PortableText } from '@portabletext/react';
+
 const formatSuperscript = (text) => {
     if (typeof text !== 'string') return text;
     if (!text.includes('®')) return text;
@@ -157,9 +159,20 @@ export default function BioModal({ isOpen, onClose, member }) {
                     </div>
 
                     <div className="body-lg" style={{ lineHeight: '1.8', color: 'var(--color-teal)' }}>
-                        {member?.bio?.split('\n').map((para, i) => (
-                            <p key={i} style={{ marginBottom: '2rem' }}>{formatSuperscript(para)}</p>
-                        ))}
+                        {typeof member?.bio === 'string' ? (
+                            member?.bio?.split('\n').map((para, i) => (
+                                <p key={i} style={{ marginBottom: '2rem' }}>{formatSuperscript(para)}</p>
+                            ))
+                        ) : (
+                            <PortableText 
+                                value={member?.bio} 
+                                components={{
+                                    block: {
+                                        normal: ({children}) => <p style={{ marginBottom: '2rem' }}>{children}</p>,
+                                    }
+                                }} 
+                            />
+                        )}
                     </div>
                 </div>
             </div>

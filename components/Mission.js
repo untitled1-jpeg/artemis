@@ -4,6 +4,8 @@ import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import { PortableText } from '@portabletext/react';
+
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Mission({ data }) {
@@ -63,7 +65,20 @@ export default function Mission({ data }) {
                 <div className="mission-grid" style={{ position: 'relative' }}>
                     <div className="mission-headline" ref={headlineRef}>
                         <h2 style={{ opacity: 0, transform: 'translateY(var(--editorial-gap))', marginBottom: 'var(--editorial-gap)', lineHeight: '1.25' }}>{content.title}</h2>
-                        <p style={{ opacity: 0, transform: 'translateY(var(--editorial-gap))' }}>{content.body}</p>
+                        {typeof content.body === 'string' ? (
+                            <p style={{ opacity: 0, transform: 'translateY(var(--editorial-gap))' }}>{content.body}</p>
+                        ) : (
+                            <div style={{ opacity: 0, transform: 'translateY(var(--editorial-gap))' }}>
+                                <PortableText 
+                                    value={content.body} 
+                                    components={{
+                                        block: {
+                                            normal: ({children}) => <p>{children}</p>,
+                                        }
+                                    }}
+                                />
+                            </div>
+                        )}
                         <Link href="/mission" className="learn-more" style={{ opacity: 0, transform: 'translateY(var(--editorial-gap))', cursor: 'pointer' }}>
                             <span className="cta-text">{content.ctaLabel}</span> <span className="learn-more-arrow">&rarr;</span>
                         </Link>

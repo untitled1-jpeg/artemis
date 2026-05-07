@@ -1,5 +1,5 @@
 import { client } from '@/sanity/lib/client';
-import { heroQuery, missionQuery, teamQuery, advisorQuery, offeringsQuery } from '@/sanity/lib/queries';
+import { homePageQuery } from '@/sanity/lib/queries';
 import Nav from '@/components/Nav';
 import HomeHero from '@/components/HomeHero';
 import Mission from '@/components/Mission';
@@ -10,59 +10,25 @@ import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import { Suspense } from 'react';
 
-// Loading Placeholders
-const SectionPlaceholder = ({ height = '400px' }) => (
-  <div style={{ height, width: '100%', backgroundColor: 'var(--color-teal)', opacity: 0.1 }} />
-);
+export const revalidate = 60;
 
-async function HeroSection() {
-  const data = await client.fetch(heroQuery);
-  return <HomeHero data={data} />;
-}
+export default async function Home() {
+  const data = await client.fetch(homePageQuery);
 
-async function MissionSection() {
-  const data = await client.fetch(missionQuery);
-  return <Mission data={data} />;
-}
-
-async function TeamSection() {
-  const data = await client.fetch(teamQuery);
-  return <Team data={data} />;
-}
-
-async function OfferingsSection() {
-  const data = await client.fetch(offeringsQuery);
-  return <Offerings data={data} />;
-}
-
-async function AdvisorSection() {
-  const data = await client.fetch(advisorQuery);
-  return <Advisor data={data} />;
-}
-
-export default function Home() {
   return (
     <main>
       <Nav />
-      <HeroSection />
+      <HomeHero data={{ headline: data?.heroHeadline, subheadline: data?.heroSubheadline, heroBackgroundImage: data?.heroBackgroundImage }} />
 
-      <Suspense fallback={<SectionPlaceholder />}>
-        <MissionSection />
-      </Suspense>
+      <Mission data={{ title: data?.missionHeadline, body: data?.missionCopy, ctaLabel: data?.missionButtonText, ctaLink: data?.missionButtonLink, image: data?.missionImage }} />
 
-      <Suspense fallback={<SectionPlaceholder />}>
-        <TeamSection />
-      </Suspense>
+      <Team data={{ title: data?.teamHeadline, content: data?.teamCopy, ctaLabel: data?.teamButtonText, images: data?.teamImages }} />
 
-      <Suspense fallback={<SectionPlaceholder />}>
-        <OfferingsSection />
-      </Suspense>
+      <Offerings data={{ title: data?.offeringsHeadline, body: data?.offeringsCopy, ctaLabel: data?.offeringsButtonText, ctaLink: data?.offeringsButtonLink }} />
 
-      <Suspense fallback={<SectionPlaceholder />}>
-        <AdvisorSection />
-      </Suspense>
+      <Advisor data={{ title: data?.advisorHeadline, body: data?.advisorCopy }} />
 
-      <Contact />
+      <Contact title={data?.ctaHeadline} image={data?.ctaImage} />
       <Footer />
     </main>
   );

@@ -4,6 +4,8 @@ import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import { PortableText } from '@portabletext/react';
+
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Offerings({ data }) {
@@ -56,7 +58,20 @@ export default function Offerings({ data }) {
                 <div className="offerings-grid">
                     <div className="offerings-text">
                         <h2 className="serif" style={{ letterSpacing: '0.25rem', marginBottom: 'var(--editorial-gap)' }}>{content.title}</h2>
-                        <p style={{ lineHeight: '1.7', marginBottom: 'var(--editorial-gap)' }}>{content.body}</p>
+                        {typeof content.body === 'string' ? (
+                            <p style={{ lineHeight: '1.7', marginBottom: 'var(--editorial-gap)' }}>{content.body}</p>
+                        ) : (
+                            <div style={{ marginBottom: 'var(--editorial-gap)' }}>
+                                <PortableText 
+                                    value={content.body} 
+                                    components={{
+                                        block: {
+                                            normal: ({children}) => <p style={{ lineHeight: '1.7', marginBottom: 'var(--space-3)' }}>{children}</p>,
+                                        }
+                                    }} 
+                                />
+                            </div>
+                        )}
                         <Link href="/offerings" className="learn-more" style={{ color: 'var(--color-gold)', cursor: 'pointer' }}>
                             <span className="cta-text">{content.ctaLabel}</span> <span className="learn-more-arrow">&rarr;</span>
                         </Link>
