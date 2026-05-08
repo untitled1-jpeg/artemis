@@ -1,8 +1,36 @@
 'use client';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { client } from '@/sanity/lib/client';
+import { globalSettingsQuery } from '@/sanity/lib/queries';
+import { PortableText } from '@portabletext/react';
 
-export default function Footer({ variant = 'full', settings }) {
+const superscriptText = (text) => {
+    if (typeof text !== 'string') return text;
+    if (!text.includes('®')) return text;
+    
+    // Force direct HTML injection for the symbol
+    return (
+        <span 
+            dangerouslySetInnerHTML={{ 
+                __html: text.replace(/®/g, '<sup style="font-size: 0.65em; vertical-align: super; position: relative; top: -0.1em;">&reg;</sup>') 
+            }} 
+        />
+    );
+};
+
+export default function Footer({ variant = 'full', settings: initialSettings }) {
+    const [settings, setSettings] = useState(initialSettings);
     const isSimple = variant === 'simple';
+
+    useEffect(() => {
+        if (!initialSettings) {
+            client.fetch(globalSettingsQuery).then(data => {
+                setSettings(data);
+            });
+        }
+    }, [initialSettings]);
+
     const phoneNumeric = settings?.phoneNumber?.replace(/\D/g, '') || '9729089027';
 
     return (
@@ -58,11 +86,31 @@ export default function Footer({ variant = 'full', settings }) {
                     color: 'rgba(246, 245, 240, 0.5)',
                     fontFamily: 'system-ui, -apple-system, sans-serif'
                 }}>
-                    {settings?.legalDisclaimer?.map((paragraph, i) => (
-                        <p key={i} style={{ marginBottom: i === settings.legalDisclaimer.length - 1 ? '0' : '0.75rem' }}>
-                            {paragraph}
-                        </p>
-                    )) || (
+                    {settings?.legalDisclaimer ? (
+                        typeof settings.legalDisclaimer === 'string' ? (
+                            <p>{settings.legalDisclaimer}</p>
+                        ) : (
+                            <PortableText 
+                                value={settings.legalDisclaimer} 
+                                components={{
+                                    block: {
+                                        normal: ({children}) => <p style={{ marginBottom: '0.75rem' }}>{children}</p>,
+                                    },
+                                    marks: {
+                                        link: ({children, value}) => {
+                                            const rel = !value.href.startsWith('/') ? 'noreferrer noopener' : undefined;
+                                            return (
+                                                <a href={value.href} rel={rel} target="_blank" style={{ textDecoration: 'underline', color: 'inherit' }}>
+                                                    {children}
+                                                </a>
+                                            );
+                                        },
+                                    },
+                                    text: ({text}) => superscriptText(text)
+                                }} 
+                            />
+                        )
+                    ) : (
                         <>
                             <p style={{ marginBottom: '0.75rem' }}>
                                 Securities and investment advisory services offered through Integrity Alliance, LLC, Member SIPC. Integrity Wealth is a marketing name for Integrity Alliance, LLC. Artemis Partners is not affiliated with Integrity Wealth.
@@ -78,9 +126,11 @@ export default function Footer({ variant = 'full', settings }) {
                             </p>
                         </>
                     )}
-                    <p style={{ marginTop: '0.75rem' }}>
-                        {settings?.copyrightText || "© 2026 by Death and Tax Advisors, LLC dba Artemis"} <span style={{ margin: '0 1rem', opacity: 0.3 }}>|</span> <a href="https://brokercheck.finra.org/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>FINRA’s BrokerCheck</a>
-                    </p>
+                    {settings?.copyrightText && (
+                        <p style={{ marginTop: '0.75rem' }}>
+                            {settings.copyrightText} <span style={{ margin: '0 1rem', opacity: 0.3 }}>|</span> <a href="https://brokercheck.finra.org/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>FINRA’s BrokerCheck</a>
+                        </p>
+                    )}
                 </div>
             </div>
         </footer>

@@ -1,5 +1,5 @@
 'use client';
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Nav from '@/components/Nav';
@@ -8,10 +8,29 @@ import Footer from '@/components/Footer';
 import PageHero from '@/components/PageHero';
 import Link from 'next/link';
 import { PortableText } from '@portabletext/react';
+import DisclosureModal from '@/components/DisclosureModal';
 
 gsap.registerPlugin(ScrollTrigger);
 
-function OfferingBand({ title, features, needsTitle, needs, bgColor, textColor = 'var(--color-white)', bulletColor = 'var(--color-gold)', featureSize = '1.125rem', featureClass = "", footnote = null }) {
+const superscriptText = (text) => {
+    if (typeof text !== 'string') return text;
+    if (!text.includes('®')) return text;
+    
+    // Force direct HTML injection for the symbol
+    return (
+        <span 
+            dangerouslySetInnerHTML={{ 
+                __html: text.replace(/®/g, '<sup style="font-size: 0.65em; vertical-align: super; position: relative; top: -0.1em;">&reg;</sup>') 
+            }} 
+        />
+    );
+};
+
+const formatSuperscript = (text) => {
+    return superscriptText(text);
+};
+
+function OfferingBand({ title, features, needsTitle, needs, bgColor, textColor = 'var(--color-white)', bulletColor = 'var(--color-gold)', featureSize = '1.125rem', featureClass = "", footnote = null, onDisclosureClick }) {
     const bandRef = useRef(null);
     const titleRef = useRef(null);
     const listRef = useRef(null);
@@ -64,19 +83,25 @@ function OfferingBand({ title, features, needsTitle, needs, bgColor, textColor =
                             {features.map((f, i) => <li key={i} style={{ marginBottom: '0.6rem' }}>{f}</li>)}
                         </ul>
                         {footnote && (
-                            <div style={{ marginTop: '2rem', fontSize: '11px', lineHeight: '1.6', opacity: 0.6, maxWidth: '600px' }}>
-                                {typeof footnote === 'string' ? (
-                                    footnote
-                                ) : (
-                                    <PortableText 
-                                        value={footnote} 
-                                        components={{
-                                            block: {
-                                                normal: ({children}) => <p style={{ marginBottom: '1rem' }}>{children}</p>,
-                                            }
-                                        }} 
-                                    />
-                                )}
+                            <div className="disclosure-trigger-container desktop-disclosure-only" style={{ marginTop: '2.5rem' }}>
+                                <button 
+                                    onClick={() => onDisclosureClick(footnote)}
+                                    className="learn-more" 
+                                    style={{ 
+                                        color: textColor, 
+                                        opacity: 0.8, 
+                                        background: 'none', 
+                                        border: 'none', 
+                                        padding: '0.5rem 0', 
+                                        textTransform: 'uppercase', 
+                                        letterSpacing: '0.15em',
+                                        cursor: 'pointer',
+                                        fontSize: '9px',
+                                        fontWeight: '500'
+                                    }}
+                                >
+                                    <span className="cta-text" style={{ borderBottom: `1px solid ${textColor}` }}>DISCLOSURE</span>
+                                </button>
                             </div>
                         )}
                     </div>
@@ -86,6 +111,43 @@ function OfferingBand({ title, features, needsTitle, needs, bgColor, textColor =
                             {needs.map((n, i) => <li key={i} style={{ marginBottom: '0.4rem' }}>{n}</li>)}
                         </ul>
                     </div>
+                    {footnote && (
+                        <div className="disclosure-trigger-container mobile-disclosure-only" style={{ marginTop: '2.5rem', width: '100%' }}>
+                            <button 
+                                onClick={() => onDisclosureClick(footnote)}
+                                className="learn-more" 
+                                style={{ 
+                                    color: textColor, 
+                                    opacity: 0.8, 
+                                    background: 'none', 
+                                    border: 'none', 
+                                    padding: '0.5rem 0', 
+                                    textTransform: 'uppercase', 
+                                    letterSpacing: '0.15em',
+                                    cursor: 'pointer',
+                                    fontSize: '8px',
+                                    fontWeight: '500'
+                                }}
+                            >
+                                <span className="cta-text" style={{ borderBottom: `1px solid ${textColor}` }}>DISCLOSURE</span>
+                            </button>
+                        </div>
+                    )}
+                    <style jsx>{`
+                        .mobile-disclosure-only {
+                            display: none !important;
+                        }
+                        @media (max-width: 768px) {
+                            .desktop-disclosure-only {
+                                display: none !important;
+                            }
+                            .mobile-disclosure-only {
+                                display: block !important;
+                                padding: 1rem 0;
+                                margin-top: 1rem !important;
+                            }
+                        }
+                    `}</style>
                 </div>
             </div>
         </section>
@@ -94,6 +156,17 @@ function OfferingBand({ title, features, needsTitle, needs, bgColor, textColor =
 
 export default function OfferingsClient({ data }) {
     const mainRef = useRef(null);
+    const [selectedDisclosure, setSelectedDisclosure] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleDisclosureClick = (content) => {
+        setSelectedDisclosure(content);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -189,7 +262,8 @@ export default function OfferingsClient({ data }) {
                                     components={{
                                         block: {
                                             normal: ({children}) => <p className="body-lg" style={{ color: 'var(--color-teal)', marginBottom: '1.5rem' }}>{children}</p>,
-                                        }
+                                        },
+                                        text: ({text}) => superscriptText(text)
                                     }} 
                                 />
                             )}
@@ -215,6 +289,7 @@ export default function OfferingsClient({ data }) {
                             needsTitle="NEEDS"
                             needs={cat.needs || []}
                             footnote={cat.disclaimer}
+                            onDisclosureClick={handleDisclosureClick}
                         />
                     );
                 })}
@@ -284,6 +359,12 @@ export default function OfferingsClient({ data }) {
                 variant="gold"
                 title={data?.ctaHeadline || "Complex lives deserve more than a “Tell us about yourself” box. Let’s meet."}
                 image={data?.ctaImage || "/images/img_coffee-cta-02.jpg"}
+            />
+
+            <DisclosureModal 
+                isOpen={isModalOpen} 
+                onClose={handleCloseModal} 
+                content={selectedDisclosure} 
             />
 
             <Footer variant="simple" />

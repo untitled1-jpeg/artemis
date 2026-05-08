@@ -12,6 +12,16 @@ import { PortableText } from '@portabletext/react';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const superscriptText = (text) => {
+    if (typeof text !== 'string') return text;
+    if (!text.includes('®')) return text;
+    const parts = text.split('®');
+    return parts.reduce((acc, part, i) => {
+        if (i === parts.length - 1) return [...acc, part];
+        return [...acc, part, <sup key={i}>&reg;</sup>];
+    }, []);
+};
+
 export default function MissionClient({ data }) {
     const contentRef = useRef(null);
 
@@ -88,7 +98,8 @@ export default function MissionClient({ data }) {
                                         components={{
                                             block: {
                                                 normal: ({children}) => <p className="body-lg" style={{ marginBottom: 'var(--space-3)', color: 'var(--color-teal)' }}>{children}</p>,
-                                            }
+                                            },
+                                            text: ({text}) => superscriptText(text)
                                         }} 
                                     />
                                 )

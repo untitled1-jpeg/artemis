@@ -6,6 +6,13 @@ import { Analytics } from "@vercel/analytics/next";
 export const metadata = {
   title: "Artemis | Independent Life Insurance Advisory",
   description: "Artemis is an independent life insurance advisory focused on personal solutions and building trust.",
+  openGraph: {
+    images: ['/images/img_team-home.jpg'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/images/img_team-home.jpg'],
+  }
 };
 
 export default function RootLayout({ children }) {

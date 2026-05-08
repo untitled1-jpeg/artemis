@@ -13,10 +13,25 @@ import { PortableText } from '@portabletext/react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const formatSuperscript = (text) => {
+const superscriptText = (text) => {
     if (typeof text !== 'string') return text;
-    if (!text.includes('®')) return text;
-    return <span dangerouslySetInnerHTML={{ __html: text.replace(/®/g, '<sup>&reg;</sup>') }} />;
+    const parts = text.split('®');
+    if (parts.length === 1) return text;
+    
+    return parts.reduce((acc, part, i) => {
+        if (i === parts.length - 1) return [...acc, part];
+        return [...acc, part, <sup key={i} style={{ 
+            fontSize: '0.6em', 
+            verticalAlign: 'baseline', 
+            position: 'relative', 
+            top: '-0.4em', 
+            lineHeight: 0 
+        }}>&reg;</sup>];
+    }, []);
+};
+
+const formatSuperscript = (text) => {
+    return superscriptText(text);
 };
 
 function TeamMember({ name, title, bio, summary, image, email, linkedin, onReadMore, delay = 0 }) {
@@ -56,14 +71,18 @@ function TeamMember({ name, title, bio, summary, image, email, linkedin, onReadM
                 </h3>
                 <div className="body-sm" style={{ color: 'rgba(255,255,255,0.8)', marginBottom: '2rem', whiteSpace: 'pre-line' }}>
                     {typeof summary === 'string' || typeof bio === 'string' ? (
-                        <p>{formatSuperscript(summary ? summary : (bio.length > 280 ? `${bio.substring(0, 280)}...` : bio))}</p>
+                        (() => {
+                            const textToRender = summary ? summary : (bio.length > 280 ? `${bio.substring(0, 280)}...` : bio);
+                            return <p>{formatSuperscript(textToRender)}</p>;
+                        })()
                     ) : (
                         <PortableText 
                             value={summary || bio} 
                             components={{
                                 block: {
                                     normal: ({children}) => <p style={{marginBottom: '1rem'}}>{children}</p>
-                                }
+                                },
+                                text: ({text}) => superscriptText(text)
                             }} 
                         />
                     )}
@@ -79,7 +98,7 @@ function TeamMember({ name, title, bio, summary, image, email, linkedin, onReadM
                             <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
                         </svg>
                     </a>
-                    {onReadMore && (
+                    {onReadMore && bio && (Array.isArray(bio) ? bio.length > 0 : bio.length > 0) && (
                         <button
                             onClick={() => onReadMore({ name, title, bio, image, email, linkedin })}
                             className="learn-more body-xs"
@@ -136,7 +155,22 @@ export default function TeamClient({ data }) {
             }, "-=1.0");
         }, contentRef);
 
-        return () => ctx.revert();
+        // NUCLEAR OPTION: Manually fix the ® symbol in the DOM after render
+        const timer = setTimeout(() => {
+            if (contentRef.current) {
+                const elements = contentRef.current.querySelectorAll('.team-member p, .team-member h3, .team-member span');
+                elements.forEach(el => {
+                    if (el.innerHTML.includes('®') && !el.querySelector('.forced-sup')) {
+                        el.innerHTML = el.innerHTML.replace(/®/g, '<sup class="forced-sup" style="font-size: 0.8em; vertical-align: baseline; position: relative; top: -0.3em; line-height: 0;">&reg;</sup>');
+                    }
+                });
+            }
+        }, 1200); // Wait for page animations to settle
+
+        return () => {
+            ctx.revert();
+            clearTimeout(timer);
+        };
     }, []);
 
     return (
@@ -174,6 +208,19 @@ export default function TeamClient({ data }) {
                                         components={{
                                             block: {
                                                 normal: ({children}) => <p className="body-lg reveal-up" style={{ marginBottom: '2.5rem', color: 'var(--color-teal)' }}>{children}</p>,
+                                            },
+                                            types: {
+                                                text: ({value}) => {
+                                                    const text = value.text || "";
+                                                    if (text.includes('®')) {
+                                                        const parts = text.split('®');
+                                                        return parts.reduce((acc, part, i) => {
+                                                            if (i === parts.length - 1) return [...acc, part];
+                                                            return [...acc, part, <sup key={i}>&reg;</sup>];
+                                                        }, []);
+                                                    }
+                                                    return text;
+                                                }
                                             }
                                         }} 
                                     />

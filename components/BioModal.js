@@ -4,10 +4,25 @@ import { gsap } from 'gsap';
 
 import { PortableText } from '@portabletext/react';
 
-const formatSuperscript = (text) => {
+const superscriptText = (text) => {
     if (typeof text !== 'string') return text;
-    if (!text.includes('®')) return text;
-    return <span dangerouslySetInnerHTML={{ __html: text.replace(/®/g, '<sup>&reg;</sup>') }} />;
+    const parts = text.split('®');
+    if (parts.length === 1) return text;
+    
+    return parts.reduce((acc, part, i) => {
+        if (i === parts.length - 1) return [...acc, part];
+        return [...acc, part, <sup key={i} style={{ 
+            fontSize: '0.6em', 
+            verticalAlign: 'baseline', 
+            position: 'relative', 
+            top: '-0.4em', 
+            lineHeight: 0 
+        }}>&reg;</sup>];
+    }, []);
+};
+
+const formatSuperscript = (text) => {
+    return superscriptText(text);
 };
 
 export default function BioModal({ isOpen, onClose, member }) {
@@ -37,6 +52,19 @@ export default function BioModal({ isOpen, onClose, member }) {
                     stagger: 0.1,
                     ease: 'power2.out'
                 }, '-=0.4');
+
+            // NUCLEAR OPTION: Manually fix the ® symbol in the DOM after render
+            const timer = setTimeout(() => {
+                if (panelRef.current) {
+                    const elements = panelRef.current.querySelectorAll('p, h3, span, li');
+                    elements.forEach(el => {
+                        if (el.innerHTML.includes('®') && !el.querySelector('.forced-sup')) {
+                            el.innerHTML = el.innerHTML.replace(/®/g, '<sup class="forced-sup" style="font-size: 0.8em; vertical-align: baseline; position: relative; top: -0.3em; line-height: 0;">&reg;</sup>');
+                        }
+                    });
+                }
+            }, 800); // Wait for animations to finish
+            return () => clearTimeout(timer);
         } else {
             const tl = gsap.timeline({
                 onComplete: () => {
@@ -160,8 +188,8 @@ export default function BioModal({ isOpen, onClose, member }) {
 
                     <div className="body-lg" style={{ lineHeight: '1.8', color: 'var(--color-teal)' }}>
                         {typeof member?.bio === 'string' ? (
-                            member?.bio?.split('\n').map((para, i) => (
-                                <p key={i} style={{ marginBottom: '2rem' }}>{formatSuperscript(para)}</p>
+                            member.bio.split(/[\n]|<br\s*\/?>/gi).map((para, i) => (
+                                para.trim() ? <p key={i} style={{ marginBottom: '2rem' }}>{formatSuperscript(para)}</p> : null
                             ))
                         ) : (
                             <PortableText 
@@ -169,7 +197,8 @@ export default function BioModal({ isOpen, onClose, member }) {
                                 components={{
                                     block: {
                                         normal: ({children}) => <p style={{ marginBottom: '2rem' }}>{children}</p>,
-                                    }
+                                    },
+                                    text: ({text}) => superscriptText(text)
                                 }} 
                             />
                         )}

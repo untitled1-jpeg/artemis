@@ -48,7 +48,8 @@ export default {
         {
             name: 'legalDisclaimer',
             title: 'Legal Disclaimer',
-            type: 'text',
+            type: 'array',
+            of: [{ type: 'block' }],
             group: 'footer',
             description: 'The small legal text at the very bottom of the footer.',
         },
