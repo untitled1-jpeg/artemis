@@ -1,3 +1,4 @@
+import { client } from '@/sanity/lib/client';
 import { offeringsPageQuery, globalSettingsQuery } from '@/sanity/lib/queries';
 import OfferingsClient from './OfferingsClient';
 

@@ -1,3 +1,4 @@
+import { client } from '@/sanity/lib/client';
 import { missionPageQuery, globalSettingsQuery } from '@/sanity/lib/queries';
 import MissionClient from './MissionClient';
 
