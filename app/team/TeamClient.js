@@ -113,7 +113,7 @@ function TeamMember({ name, title, bio, summary, image, email, linkedin, onReadM
     );
 }
 
-export default function TeamClient({ data }) {
+export default function TeamClient({ data, settings }) {
     const contentRef = useRef(null);
     const [selectedMember, setSelectedMember] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -270,7 +270,7 @@ export default function TeamClient({ data }) {
                 member={selectedMember}
             />
 
-            <Footer variant="simple" />
+            <Footer variant="simple" settings={settings} />
         </main>
     );
 }

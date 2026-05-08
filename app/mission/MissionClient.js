@@ -22,7 +22,7 @@ const superscriptText = (text) => {
     }, []);
 };
 
-export default function MissionClient({ data }) {
+export default function MissionClient({ data, settings }) {
     const contentRef = useRef(null);
 
     useLayoutEffect(() => {
@@ -124,7 +124,7 @@ export default function MissionClient({ data }) {
                 title={data?.ctaHeadline || "Life insurance is too personal for a contact form. Let’s meet in person."}
                 image={data?.ctaImage || "/images/img_coffee-cta-01.jpg"}
             />
-            <Footer variant="simple" />
+            <Footer variant="simple" settings={settings} />
         </main>
     );
 }

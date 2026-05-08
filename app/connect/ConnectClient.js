@@ -103,28 +103,34 @@ export default function ConnectClient({ data, settings }) {
                 <div className="container">
                     <div className="contact-info-grid">
                         <div className="reveal-up" style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
-                            <div>
-                                <h3 className="serif" style={{ fontSize: '1.875rem', marginBottom: '0.6rem', letterSpacing: '0.1em', lineHeight: '1.25', fontWeight: '500' }}>IN PERSON</h3>
-                                <p className="serif" style={{ fontSize: '1.875rem', opacity: 0.9, lineHeight: '1.2' }}>
-                                    <a href={`https://maps.google.com/?q=${encodeURIComponent(settings?.address || '2750 Fairmount St, Dallas, TX 75201')}`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit', whiteSpace: 'pre-line' }}>
-                                        {settings?.address || "2750 Fairmount\nDallas, TX 75201"}
-                                    </a>
-                                </p>
-                            </div>
+                            {settings?.address && (
+                                <div>
+                                    <h3 className="serif" style={{ fontSize: '1.875rem', marginBottom: '0.6rem', letterSpacing: '0.1em', lineHeight: '1.25', fontWeight: '500' }}>IN PERSON</h3>
+                                    <p className="serif" style={{ fontSize: '1.875rem', opacity: 0.9, lineHeight: '1.2' }}>
+                                        <a href={`https://maps.google.com/?q=${encodeURIComponent(settings.address)}`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit', whiteSpace: 'pre-line' }}>
+                                            {settings.address}
+                                        </a>
+                                    </p>
+                                </div>
+                            )}
 
-                            <div>
-                                <h3 className="serif" style={{ fontSize: '1.875rem', marginBottom: '0.6rem', letterSpacing: '0.1em', lineHeight: '1.25', fontWeight: '500' }}>CALL</h3>
-                                <p className="serif" style={{ fontSize: '1.875rem', opacity: 0.9, lineHeight: '1.2' }}>
-                                    <a href={`tel:${phoneNumeric}`} style={{ textDecoration: 'none', color: 'inherit' }}>{settings?.phoneNumber || "972.908.9027"}</a>
-                                </p>
-                            </div>
+                            {settings?.phoneNumber && (
+                                <div>
+                                    <h3 className="serif" style={{ fontSize: '1.875rem', marginBottom: '0.6rem', letterSpacing: '0.1em', lineHeight: '1.25', fontWeight: '500' }}>CALL</h3>
+                                    <p className="serif" style={{ fontSize: '1.875rem', opacity: 0.9, lineHeight: '1.2' }}>
+                                        <a href={`tel:${phoneNumeric}`} style={{ textDecoration: 'none', color: 'inherit' }}>{settings.phoneNumber}</a>
+                                    </p>
+                                </div>
+                            )}
 
-                            <div>
-                                <h3 className="serif" style={{ fontSize: '1.875rem', marginBottom: '0.6rem', letterSpacing: '0.1em', lineHeight: '1.25', fontWeight: '500' }}>EMAIL</h3>
-                                <p className="serif" style={{ fontSize: '1.875rem', opacity: 0.9, lineHeight: '1.2' }}>
-                                    <a href={`mailto:${settings?.email || 'contact@artemisdallas.com'}`} style={{ textDecoration: 'none', color: 'inherit' }}>{settings?.email || "contact@artemisdallas.com"}</a>
-                                </p>
-                            </div>
+                            {settings?.email && (
+                                <div>
+                                    <h3 className="serif" style={{ fontSize: '1.875rem', marginBottom: '0.6rem', letterSpacing: '0.1em', lineHeight: '1.25', fontWeight: '500' }}>EMAIL</h3>
+                                    <p className="serif" style={{ fontSize: '1.875rem', opacity: 0.9, lineHeight: '1.2' }}>
+                                        <a href={`mailto:${settings.email}`} style={{ textDecoration: 'none', color: 'inherit' }}>{settings.email}</a>
+                                    </p>
+                                </div>
+                            )}
                         </div>
 
                         <div className="reveal-up" style={{ border: '2px solid var(--color-teal)' }}>
@@ -136,7 +142,7 @@ export default function ConnectClient({ data, settings }) {
                 </div>
             </section>
 
-            <Footer variant="simple" />
+            <Footer variant="simple" settings={settings} />
         </main>
     );
 }

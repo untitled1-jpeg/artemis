@@ -154,7 +154,7 @@ function OfferingBand({ title, features, needsTitle, needs, bgColor, textColor =
     );
 }
 
-export default function OfferingsClient({ data }) {
+export default function OfferingsClient({ data, settings }) {
     const mainRef = useRef(null);
     const [selectedDisclosure, setSelectedDisclosure] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -367,7 +367,7 @@ export default function OfferingsClient({ data }) {
                 content={selectedDisclosure} 
             />
 
-            <Footer variant="simple" />
+            <Footer variant="simple" settings={settings} />
         </main>
     );
 }

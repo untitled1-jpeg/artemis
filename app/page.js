@@ -1,5 +1,5 @@
 import { client } from '@/sanity/lib/client';
-import { homePageQuery } from '@/sanity/lib/queries';
+import { homePageQuery, globalSettingsQuery } from '@/sanity/lib/queries';
 import Nav from '@/components/Nav';
 import HomeHero from '@/components/HomeHero';
 import Mission from '@/components/Mission';
@@ -13,7 +13,10 @@ import { Suspense } from 'react';
 export const revalidate = 60;
 
 export default async function Home() {
-  const data = await client.fetch(homePageQuery);
+  const [data, settings] = await Promise.all([
+    client.fetch(homePageQuery),
+    client.fetch(globalSettingsQuery)
+  ]);
 
   return (
     <main>
@@ -29,7 +32,7 @@ export default async function Home() {
       <Advisor data={{ title: data?.advisorHeadline, body: data?.advisorCopy }} />
 
       <Contact title={data?.ctaHeadline} image={data?.ctaImage} />
-      <Footer />
+      <Footer settings={settings} />
     </main>
   );
 }

@@ -2,6 +2,9 @@ import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
+import Footer from "@/components/Footer";
+import { client } from "@/sanity/lib/client";
+import { globalSettingsQuery } from "@/sanity/lib/queries";
 
 export const metadata = {
   title: "Artemis | Independent Life Insurance Advisory",

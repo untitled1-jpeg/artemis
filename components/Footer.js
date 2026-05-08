@@ -54,25 +54,31 @@ export default function Footer({ variant = 'full', settings: initialSettings }) 
                     color: 'var(--color-gold)',
                     textTransform: 'uppercase',
                 }}>
-                    <a
-                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings?.address || '2750 Fairmount Dallas Texas 75201')}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: 'inherit', textDecoration: 'none', transition: 'opacity 0.3s' }}
-                        onMouseEnter={(e) => e.target.style.opacity = '1'}
-                        onMouseLeave={(e) => e.target.style.opacity = '0.8'}
-                    >
-                        {settings?.address ? settings.address.replace(/\n/g, ', ') : "2750 FAIRMOUNT, DALLAS, TEXAS 75201"}
-                    </a>
-                    <span style={{ margin: '0 1rem', opacity: 0.5 }}>|</span>
-                    <a
-                        href={`tel:${phoneNumeric}`}
-                        style={{ color: 'inherit', textDecoration: 'none', transition: 'opacity 0.3s' }}
-                        onMouseEnter={(e) => e.target.style.opacity = '1'}
-                        onMouseLeave={(e) => e.target.style.opacity = '0.8'}
-                    >
-                        {settings?.phoneNumber || "972.908.9027"}
-                    </a>
+                    {settings?.address && (
+                        <>
+                            <a
+                                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.address)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ color: 'inherit', textDecoration: 'none', transition: 'opacity 0.3s' }}
+                                onMouseEnter={(e) => e.target.style.opacity = '1'}
+                                onMouseLeave={(e) => e.target.style.opacity = '0.8'}
+                            >
+                                {settings.address.replace(/\n/g, ', ')}
+                            </a>
+                            <span style={{ margin: '0 1rem', opacity: 0.5 }}>|</span>
+                        </>
+                    )}
+                    {settings?.phoneNumber && (
+                        <a
+                            href={`tel:${phoneNumeric}`}
+                            style={{ color: 'inherit', textDecoration: 'none', transition: 'opacity 0.3s' }}
+                            onMouseEnter={(e) => e.target.style.opacity = '1'}
+                            onMouseLeave={(e) => e.target.style.opacity = '0.8'}
+                        >
+                            {settings.phoneNumber}
+                        </a>
+                    )}
                 </div>
 
                 {/* Divider (Only for full) */}
@@ -86,7 +92,7 @@ export default function Footer({ variant = 'full', settings: initialSettings }) 
                     color: 'rgba(246, 245, 240, 0.5)',
                     fontFamily: 'system-ui, -apple-system, sans-serif'
                 }}>
-                    {settings?.legalDisclaimer ? (
+                    {settings?.legalDisclaimer && (
                         typeof settings.legalDisclaimer === 'string' ? (
                             <p>{settings.legalDisclaimer}</p>
                         ) : (
@@ -110,24 +116,9 @@ export default function Footer({ variant = 'full', settings: initialSettings }) 
                                 }} 
                             />
                         )
-                    ) : (
-                        <>
-                            <p style={{ marginBottom: '0.75rem' }}>
-                                Securities and investment advisory services offered through Integrity Alliance, LLC, Member SIPC. Integrity Wealth is a marketing name for Integrity Alliance, LLC. Artemis Partners is not affiliated with Integrity Wealth.
-                            </p>
-                            <p style={{ marginBottom: '0.75rem' }}>
-                                Death and Tax Advisors, LLC dba Artemis Partners and the above firms are independent and non-affiliated. Tax and legal advice are not offed through Integrity Wealth.
-                            </p>
-                            <p style={{ marginBottom: '0.75rem' }}>
-                                Artemis is presently licensed to sell traditional life insurance in AR, AZ, CA, CO, DC, DE, FL, IL, LA, MA, ME, MI, MO, MT, NC, NJ, OK, TN, TX, VA, VT, and WY. Variable life and annuity products, as well as other securities products, may be sold in AR, AZ, CA, CO, DE, FL, IL, LA, MA, ME, MI, MO, NC, NJ, OH, OK, PA, TN, TX, UT, VA, VT, WA, and WY.
-                            </p>
-                            <p style={{ marginBottom: '0.75rem' }}>
-                                This site is published for residents of the United States only. Representatives may only conduct business with residents of the states and jurisdictions in which they are properly registered. Therefore, a response to a request for information may be delayed until appropriate registration is obtained or exemption from registration is determined. Not all services referenced on this site are available in every state and through every advisor listed. Check the background of this firm on FINRA’s BrokerCheck
-                            </p>
-                        </>
                     )}
                     {settings?.copyrightText && (
-                        <p style={{ marginTop: '0.75rem' }}>
+                        <p style={{ marginTop: '1.75rem' }}>
                             {settings.copyrightText} <span style={{ margin: '0 1rem', opacity: 0.3 }}>|</span> <a href="https://brokercheck.finra.org/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>FINRA’s BrokerCheck</a>
                         </p>
                     )}

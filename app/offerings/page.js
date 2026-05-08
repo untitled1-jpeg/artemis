@@ -1,10 +1,12 @@
-import { client } from '@/sanity/lib/client';
-import { offeringsPageQuery } from '@/sanity/lib/queries';
+import { offeringsPageQuery, globalSettingsQuery } from '@/sanity/lib/queries';
 import OfferingsClient from './OfferingsClient';
 
 export const revalidate = 60;
 
 export default async function OfferingsPage() {
-    const data = await client.fetch(offeringsPageQuery);
-    return <OfferingsClient data={data} />;
+    const [data, settings] = await Promise.all([
+        client.fetch(offeringsPageQuery),
+        client.fetch(globalSettingsQuery)
+    ]);
+    return <OfferingsClient data={data} settings={settings} />;
 }
