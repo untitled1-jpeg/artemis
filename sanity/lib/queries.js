@@ -7,7 +7,10 @@ export const globalSettingsQuery = groq`*[_type == "globalSettings"][0]{
   copyrightText,
   legalDisclaimer,
   linkedinUrl,
-  contactSuccessMessage
+  contactSuccessMessage,
+  shareTitle,
+  shareDescription,
+  "shareImage": shareImage.asset->url
 }`;
 
 export const homePageQuery = groq`*[_type == "homePage"][0]{

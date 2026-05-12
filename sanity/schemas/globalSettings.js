@@ -4,11 +4,37 @@ export default {
     type: 'document',
     groups: [
         { name: 'company', title: 'Company Details' },
-        { name: 'social', title: 'Social Media' },
+        { name: 'seo', title: 'SEO & Social Media' },
+        { name: 'social', title: 'Social Links' },
         { name: 'footer', title: 'Footer Settings' },
         { name: 'contact', title: 'Contact Form Defaults' },
     ],
     fields: [
+        {
+            name: 'shareTitle',
+            title: 'Share Title',
+            type: 'string',
+            group: 'seo',
+            description: 'The title used for social media shares (Open Graph). Fallback is the site title.',
+        },
+        {
+            name: 'shareDescription',
+            title: 'Share Description',
+            type: 'text',
+            group: 'seo',
+            description: 'The description used for social media shares. Fallback is the site description.',
+            rows: 3,
+        },
+        {
+            name: 'shareImage',
+            title: 'Share Image',
+            type: 'image',
+            group: 'seo',
+            description: 'The image used for social media shares (recommended 1200x630px).',
+            options: {
+                hotspot: true,
+            },
+        },
         {
             name: 'phoneNumber',
             title: 'Phone Number',

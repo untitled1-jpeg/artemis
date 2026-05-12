@@ -6,17 +6,29 @@ import Footer from "@/components/Footer";
 import { client } from "@/sanity/lib/client";
 import { globalSettingsQuery } from "@/sanity/lib/queries";
 
-export const metadata = {
-  title: "Artemis | Independent Life Insurance Advisory",
-  description: "Artemis is an independent life insurance advisory focused on personal solutions and building trust.",
-  openGraph: {
-    images: ['/images/img_team-home.jpg'],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    images: ['/images/img_team-home.jpg'],
-  }
-};
+export async function generateMetadata() {
+  const settings = await client.fetch(globalSettingsQuery);
+
+  const title = settings?.shareTitle || "Artemis | Independent Life Insurance Advisory";
+  const description = settings?.shareDescription || "Artemis is an independent life insurance advisory focused on personal solutions and building trust.";
+  const ogImage = settings?.shareImage || "/images/img_team-home.jpg";
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: [ogImage],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImage],
+    }
+  };
+}
 
 export default function RootLayout({ children }) {
   return (
